@@ -1,0 +1,21 @@
+<head>
+    <title>hirogwa blog</title>
+    {% load staticfiles %}
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}" />
+    <link rel="icon" type="image/jpg" href="{% static 'blog/favicon.jpg' %}">
+</head>
+<body>
+    <h1>hirogwa blog</h1>
+    <h2 class="site-description">{{ blog.description }}</h2>
+
+    {% if latest_entries %}
+    <ul>
+        {% for entry in latest_entries %}
+        <li><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No entries are available.</p>
+    {% endif %}
+</body>

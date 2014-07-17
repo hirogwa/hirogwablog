@@ -1,0 +1,16 @@
+<head>
+    <title>{{ entry.title }} - {{ entry.blog.name }} </title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}" />
+    <link rel="icon" type="image/jpg" href="{% static 'blog/favicon.jpg' %}">
+</head>
+<body>
+    <h1>{{ entry.title }}</h1>
+    <p>
+      {{ entry.content|safe }}
+    </p>
+    <footer>
+        <p>date posted: {{ entry.pub_date }}</p>
+        <a href="{% url 'blog:index' %}">{{ entry.blog.name }}</a>
+    </footer>
+</body>

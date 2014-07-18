@@ -15,6 +15,10 @@ class Entry(models.Model):
     slug = models.SlugField()
     pub_date = models.DateTimeField('published_time')
 
+    def spaced_date(self):
+        return '%d %02d %02d' % \
+            (self.pub_date.year, self.pub_date.month, self.pub_date.day)
+
     def __unicode__(self):
         return self.title
 

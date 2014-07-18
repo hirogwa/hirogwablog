@@ -12,7 +12,10 @@
     {% if latest_entries %}
     <ul>
         {% for entry in latest_entries %}
-        <li><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></li>
+        <li>
+            <small>{{ entry.spaced_date }}&nbsp;&nbsp;</small>
+            <a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a>
+        </li>
         {% endfor %}
     </ul>
     {% else %}

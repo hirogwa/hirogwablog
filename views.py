@@ -4,7 +4,7 @@ from models import Entry, Blog
 
 def index(request):
     blog = Blog.objects.get(pk=1)
-    latest_entries = Entry.objects.all()
+    latest_entries = Entry.objects.order_by('-pub_date')[:10]
     context = {'latest_entries': latest_entries, 'blog': blog}
     return render(request, 'blog/index.html', context)
 

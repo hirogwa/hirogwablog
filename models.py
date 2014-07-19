@@ -23,9 +23,9 @@ class Entry(models.Model):
         return self.title
 
     def save(self):
-        date = datetime.date.today()
-        self.slug = '%i%i%i-%s' % (
-            date.year, date.month, date.day, slugify(self.title)
+        now = datetime.datetime.now()
+        self.slug = '%i%02d%02d%02d%02d-%s' % (
+            now.year, now.month, now.day, now.hour, now.minute, slugify(self.title)
         )
         super(Entry, self).save()
 

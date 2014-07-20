@@ -1,12 +1,24 @@
-.site-description {
-    color: rgb(120,120,120);
-    font-size: 100%;
-    font-weight: normal;
-}
-
 body {
 	font-family: 'Roboto', sans-serif;
 	color: rgb(100,100,100);
+}
+
+
+.blog_title {
+  padding-top: 0px;
+  padding-bottom: 20px;
+  margin-left: 20px;
+}
+
+.blog_title h1 {
+  margin-bottom: 5px;
+}
+
+.blog_title h2 {
+  margin-top: 3px;
+  color: rgb(120,120,120);
+  font-size: 100%;
+  font-weight: normal;
 }
 
 h1 {
@@ -64,6 +76,7 @@ p {
   margin-bottom: 1px;
   list-style-type: none;
 }
+
 
 footer {
   padding-top: 20px;

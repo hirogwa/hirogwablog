@@ -10,9 +10,9 @@
 </head>
 
 <body>
-<header>
-  <h1 class="blog_title"><a href="{% url 'blog:index' %}">{{ blog.name }}</a></h1>
-  <h2 class="site-description">{{ blog.description }}</h2>
+<header class="blog_title">
+  <h1><a href="{% url 'blog:index' %}">{{ blog.name }}</a></h1>
+  <h2>{{ blog.description }}</h2>
 </header>
 
 <div class="container_12">

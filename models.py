@@ -1,4 +1,3 @@
-import datetime
 from django.db import models
 from django.template.defaultfilters import slugify
 
@@ -7,9 +6,21 @@ class Blog(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
 
+    def __unicode__(self):
+        return self.name
+
+
+class Category(models.Model):
+    blog = models.ForeignKey(Blog)
+    name = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.name
+
 
 class Entry(models.Model):
     blog = models.ForeignKey(Blog)
+    category = models.ForeignKey(Category)
     title = models.TextField()
     content = models.TextField()
     slug = models.SlugField()
@@ -23,9 +34,8 @@ class Entry(models.Model):
         return self.title
 
     def save(self):
-        now = datetime.datetime.now()
+        date = self.pub_date
         self.slug = '%i%02d%02d%02d%02d-%s' % (
-            now.year, now.month, now.day, now.hour, now.minute, slugify(self.title)
+            date.year, date.month, date.day, date.hour, date.minute, slugify(self.title)
         )
         super(Entry, self).save()
-

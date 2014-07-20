@@ -3,11 +3,70 @@
     font-size: 100%;
     font-weight: normal;
 }
+
 body {
 	font-family: 'Roboto', sans-serif;
-  /* font-size: 48px; */
+	color: rgb(100,100,100);
 }
+
 h1 {
 	color: rgb(40,40,40);
 	text-shadow: 1px 1px 1px rgb(200,200,200);
+}
+
+.entry h2 {
+  margin-bottom: 0px;
+}
+
+.entry header {
+  font-size: small;
+  text-align: right;
+  padding-right: 5px;
+}
+
+.entry a {
+  color: rgb(0,0,0);
+}
+
+.entry {
+  padding-bottom: 10px;
+}
+
+.blog_title a,
+.grid_3 a {
+  color: inherit;
+}
+
+.blog_title a:hover {
+  text-decoration: none;
+}
+
+.grid_3 a:hover {
+  text-decoration: none;
+  color: rgb(0,0,0);
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  overflow: hidden;
+}
+
+.grid_3 ul {
+  padding-left: 10px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  list-style-type: none;
+}
+
+footer {
+  padding-top: 20px;
+  text-align: center;
+  font-style: italic;
 }

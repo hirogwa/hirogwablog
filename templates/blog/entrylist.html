@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+
+{% block title %}{{ blog.name }}{% endblock %}
+
+{% block contents %}
+  {% if entries %}
+    {% for entry in entries %}
+    <div class="entry">
+      <h2><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></h2>
+      <header>{{ entry.spaced_date }}</header>
+      <p>{{ entry.content|safe }}</p>
+      <footer class="entry-footer"></footer>
+    </div>
+      {% endfor %}
+  {% else %}
+    <p>No entries are available.</p>
+  {% endif %}
+{% endblock %}

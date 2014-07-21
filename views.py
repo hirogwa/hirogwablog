@@ -46,8 +46,7 @@ def entry_by_slug(request, slug_text):
 
 def entry(request, blog_entry):
     entries = [blog_entry]
-    context = {'entries': entries}
-    return render(request, 'blog/entry.html', add_universal_content(context))
+    return page(request, entries)
 
 
 def category(request, category_obj):

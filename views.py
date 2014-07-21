@@ -1,13 +1,37 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from models import Entry, Blog, Category
 
 
+PER_PAGE = 10
+
+
 def index(request):
-    blog = Blog.objects.get(pk=1)
-    latest_entries = Entry.objects.order_by('-pub_date')[:10]
-    context = {'blog': blog,
-               'entries': latest_entries}
-    return render(request, 'blog/index.html', add_sidebar_info(context))
+    return unfiltered(request)
+
+
+def archive(request):
+    entries = Entry.objects.all().order_by('-pub_date')
+    context = {'entries': entries}
+    return render(request, 'blog/archive.html', add_universal_content(context))
+
+
+def page(request, entry_list):
+    paginator = Paginator(entry_list, PER_PAGE)
+    page = request.GET.get('page')
+    try:
+        entries = paginator.page(page)
+    except PageNotAnInteger:
+        entries = paginator.page(1)
+    except EmptyPage:
+        entries = paginator.page(paginator.num_pages)
+    context = {'entries': entries}
+    return render(request, 'blog/page.html', add_universal_content(context))
+
+
+def unfiltered(request):
+    all_entries = Entry.objects.all().order_by('-pub_date')
+    return page(request, all_entries)
 
 
 def entry_by_id(request, entry_id):
@@ -22,14 +46,13 @@ def entry_by_slug(request, slug_text):
 
 def entry(request, blog_entry):
     entries = [blog_entry]
-    context = {'entries': entries, 'blog': blog_entry.blog}
-    return render(request, 'blog/entry.html', add_sidebar_info(context))
+    context = {'entries': entries}
+    return render(request, 'blog/entry.html', add_universal_content(context))
 
 
 def category(request, category_obj):
     entries = Entry.objects.filter(category=category_obj.id).order_by('-pub_date')
-    context = {'entries': entries, 'blog': category_obj.blog}
-    return render(request, 'blog/category.html', add_sidebar_info(context))
+    return page(request, entries)
 
 
 def category_by_name(request, category_name):
@@ -37,9 +60,14 @@ def category_by_name(request, category_name):
     return category(request, cat)
 
 
+def add_universal_content(context):
+    context['blog'] = Blog.objects.get(pk=1)
+    return add_sidebar_info(context)
+
+
 def add_sidebar_info(context):
-    all_entries = Entry.objects.order_by('-pub_date')
+    recent_entries = Entry.objects.order_by('-pub_date')[:10]
     categories = Category.objects.all()
     context['categories'] = categories
-    context['all_entries'] = all_entries
+    context['all_entries'] = recent_entries
     return context

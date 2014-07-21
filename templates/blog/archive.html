@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block load_statics %}
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/archive.css' %}"/>
+{% endblock %}
+
+{% block title %}{{ blog.name }}{% endblock %}
+
+{% block contents %}
+{% if entries %}
+{% for entry in entries %}
+  <div class="archive">
+    <ul>
+    <li>{{ entry.spaced_date }} - <a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></li>
+    </ul>
+  </div>
+{% endfor %}
+{% else %}
+  <p>No entries are available.</p>
+{% endif %}
+{% endblock %}

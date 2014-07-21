@@ -3,16 +3,37 @@
 {% block title %}{{ blog.name }}{% endblock %}
 
 {% block contents %}
-  {% if entries %}
-    {% for entry in entries %}
-    <div class="entry">
-      <h2><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></h2>
-      <header>{{ entry.spaced_date }}</header>
-      <p>{{ entry.content|safe }}</p>
-      <footer class="entry-footer"></footer>
-    </div>
-      {% endfor %}
-  {% else %}
-    <p>No entries are available.</p>
-  {% endif %}
+{% if entries %}
+{% for entry in entries %}
+<div class="entry">
+  <h2><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></h2>
+  <!--
+  <header>{{ entry.spaced_date }}</header>
+  -->
+  <p>{{ entry.content|safe }}</p>
+  <footer class="entry_footer">
+    <small>posted {{ entry.spaced_date }} on
+      <a href="{% url 'blog:category_by_name' entry.category %}">{{ entry.category }}</a>
+    </small>
+  </footer>
+</div>
+{% endfor %}
+{% else %}
+<p>No entries are available.</p>
+{% endif %}
+
+<div class="pagination">
+  <span class="step-links">
+    {% if entries.has_previous %}
+      <a href="?page={{ entries.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current">{{ entries.number }} of {{ entries.paginator.num_pages }}</span>
+
+    {% if entries.has_next %}
+      <a href="?page={{ entries.next_page_number }}">next</a>
+    {% endif %}
+  </span>
+</div>
+
 {% endblock %}

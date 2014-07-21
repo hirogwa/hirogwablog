@@ -1,6 +1,6 @@
 body {
 	font-family: 'Roboto', sans-serif;
-	color: rgb(100,100,100);
+  color: #555;
 }
 
 
@@ -16,18 +16,19 @@ body {
 
 .blog_title h2 {
   margin-top: 3px;
-  color: rgb(120,120,120);
   font-size: 100%;
   font-weight: normal;
 }
 
 h1 {
-	color: rgb(40,40,40);
-	text-shadow: 1px 1px 1px rgb(200,200,200);
+  color: #333;
+	text-shadow: 0.5px 0.5px 0.5px #bbb;
+  font-weight: normal;
 }
 
 .entry h2 {
   margin-bottom: 0px;
+  font-weight: normal;
 }
 
 .entry header {
@@ -36,26 +37,24 @@ h1 {
   padding-right: 5px;
 }
 
-.entry h2 a {
-  color: rgb(0,0,0);
+.entry h2 {
+  color: #333;
 }
 
 .entry {
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  padding-top: 20px;
 }
 
 .blog_title a,
+.entry h2 a,
+.entry_footer a ,
 .grid_3 a {
   color: inherit;
 }
 
 .blog_title a:hover {
   text-decoration: none;
-}
-
-.grid_3 a:hover {
-  text-decoration: none;
-  color: rgb(0,0,0);
 }
 
 a {
@@ -70,6 +69,24 @@ p {
   overflow: hidden;
 }
 
+blockquote {
+  font-style: italic;
+  font-weight: lighter;
+  border-left: 3px solid #ccc;
+  padding-left: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+blockquote p {
+  display: inline;
+}
+
+.grid_3 h3 {
+  color: #333;
+  font-weight: normal;
+}
+
 .grid_3 ul {
   padding-left: 10px;
   margin-top: 1px;
@@ -77,6 +94,30 @@ p {
   list-style-type: none;
 }
 
+.entry footer {
+  border-top: 0.5px solid #ccc;
+  margin-top: 35px;
+  padding-top: 0px;
+  text-align: right;
+  font-style: inherit;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.pagination .current {
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+.pagination a {
+  color: inherit;
+}
+
+.grid_3 .archive_all li {
+  margin-top: 10px;
+}
 
 footer {
   padding-top: 20px;

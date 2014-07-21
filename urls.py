@@ -6,4 +6,6 @@ urlpatterns = patterns('',
                        url(r'^entry\-by\-id/(?P<entry_id>\d+)/$', views.entry_by_id, name='entry'),
                        url(r'^entry/(?P<slug_text>\S+)/$', views.entry_by_slug, name='entry_by_slug'),
                        url(r'^category/(?P<category_name>\S+)/$', views.category_by_name, name='category_by_name'),
+                       url(r'^archive$', views.archive, name='archive'),
+                       url(r'^page/(?P<page_number>\d+)/$', views.unfiltered, name='page'),
                        )

@@ -30,6 +30,9 @@ class Entry(models.Model):
         return '%d %02d %02d' % \
             (self.pub_date.year, self.pub_date.month, self.pub_date.day)
 
+    def get_absolute_url(self):
+        return '/blog/entry/%s' % self.slug
+
     def __unicode__(self):
         return self.title
 

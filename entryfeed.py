@@ -15,6 +15,3 @@ class LatestEntriesFeed(Feed):
 
     def item_description(self, entry):
         return entry.content
-
-    def item_link(self, entry):
-        return '/index/'

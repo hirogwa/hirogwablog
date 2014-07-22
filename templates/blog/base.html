@@ -28,12 +28,14 @@
 
   <div class="grid_3">
     {% block sidebar %}
+
     <h3>category</h3>
       {% for cat in categories %}
       <ul>
         <li><a href="{% url 'blog:category_by_name' cat.name %}">{{ cat }}</a></li>
       </ul>
       {% endfor %}
+
     <h3>recent posts</h3>
       <ul>
         <div class="archive_list">
@@ -45,6 +47,12 @@
           <li><a href="{% url 'blog:archive' %}">more...</a></li>
         </div>
       </ul>
+
+    <h3>feed</h3>
+      <ul>
+        <li><a href="{% url 'blog:feed' %}">RSS</a></li>
+      </ul>
+
     {% endblock %}
   </div>
   <!-- end .grid_3 -->

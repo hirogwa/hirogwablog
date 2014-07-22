@@ -9,5 +9,5 @@ urlpatterns = patterns('',
                        url(r'^category/(?P<category_name>\S+)/$', views.category_by_name, name='category_by_name'),
                        url(r'^archive$', views.archive, name='archive'),
 
-                       url(r'^$', LatestEntriesFeed(), name='feed'),
+                       url(r'^feed/$', LatestEntriesFeed(), name='feed'),
                        )

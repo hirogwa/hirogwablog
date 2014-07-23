@@ -124,3 +124,23 @@ footer {
   text-align: center;
   font-style: italic;
 }
+
+.fb-like {
+  float: left;
+  display: inline-block;
+}
+
+.twitter_share {
+  float: left;
+  display: inline-block;
+}
+
+.twitter-share-button {
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 2px;
+}
+
+.pub_info {
+  display: inline-block;
+}

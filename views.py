@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse
 from models import Entry, Blog, Category
 
 
@@ -47,6 +48,10 @@ def entry_by_slug(request, slug_text):
 def entry(request, blog_entry):
     entries = [blog_entry]
     return page(request, entries)
+
+
+def entry_url(request):
+    return request.build_absolute_uri(reverse('blog:index'))
 
 
 def category(request, category_obj):

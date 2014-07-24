@@ -18,7 +18,6 @@
 {% for entry in entries %}
 <div class="entry">
   <h2><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></h2>
-  <h3>{{ host }}{% url 'blog:entry_by_slug' entry.slug %}</h3>
   <p>{{ entry.content|safe }}</p>
   <footer class="entry_footer">
     <div class="pub_info">

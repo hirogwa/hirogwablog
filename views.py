@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.urlresolvers import reverse
 from models import Entry, Blog, Category
 
 
@@ -19,14 +18,14 @@ def archive(request):
 
 def page(request, entry_list):
     paginator = Paginator(entry_list, PER_PAGE)
-    page = request.GET.get('page')
+    page_number = request.GET.get('page')
     try:
-        entries = paginator.page(page)
+        entries = paginator.page(page_number)
     except PageNotAnInteger:
         entries = paginator.page(1)
     except EmptyPage:
         entries = paginator.page(paginator.num_pages)
-    context = {'entries': entries}
+    context = {'entries': entries, 'host': request.META['HTTP_HOST']}
     return render(request, 'blog/page.html', add_universal_content(context))
 
 
@@ -48,10 +47,6 @@ def entry_by_slug(request, slug_text):
 def entry(request, blog_entry):
     entries = [blog_entry]
     return page(request, entries)
-
-
-def entry_url(request):
-    return request.build_absolute_uri(reverse('blog:index'))
 
 
 def category(request, category_obj):

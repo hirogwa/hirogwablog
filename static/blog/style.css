@@ -125,6 +125,11 @@ footer {
   font-style: italic;
 }
 
+.social_buttons {
+  float: left;
+  display: inline-block;
+}
+
 .fb-like {
   float: left;
   display: inline-block;

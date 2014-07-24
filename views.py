@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from models import Entry, Blog, Category
 from search import get_query
+import unicodedata
 
 
 PER_PAGE = 10
@@ -77,10 +78,11 @@ def add_sidebar_info(context):
 
 def search(request):
     if ('q' in request.GET) and request.GET['q'].strip():
-        query_string = request.GET['q']
+        query_string_base = request.GET['q']
+        query_string = unicodedata.normalize('NFKC', query_string_base)
         entry_query = get_query(query_string, ['title', 'content'])
         found_entries = Entry.objects.filter(entry_query).order_by('-pub_date')
-        context = {'query_string': query_string}
+        context = {'query_string': query_string_base}
         return page(request, found_entries, html_file='blog/search.html', context=context)
     else:
         return index(request)

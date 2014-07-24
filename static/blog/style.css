@@ -82,9 +82,15 @@ blockquote p {
   display: inline;
 }
 
+.entry_list_header h3,
 .grid_3 h3 {
   color: #333;
   font-weight: normal;
+}
+
+.entry_list_header .query_string,
+.entry_list_header .category_string {
+  font-style: italic;
 }
 
 .grid_3 ul {
@@ -92,6 +98,10 @@ blockquote p {
   margin-top: 1px;
   margin-bottom: 1px;
   list-style-type: none;
+}
+
+.grid_3 .search_form {
+  margin-top: 50px;
 }
 
 .entry footer {

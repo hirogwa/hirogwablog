@@ -55,6 +55,12 @@
         <li><a href="{% url 'blog:feed' %}">RSS</a></li>
       </ul>
 
+    <div class="search_form">
+      <form method="get" action="{% url 'blog:search' %}">
+        <input type="search" placeholder="search" name="q" />
+      </form>
+    </div>
+
     {% endblock %}
   </div>
   <!-- end .grid_3 -->

@@ -25,7 +25,7 @@ def page(request, entry_list):
         entries = paginator.page(1)
     except EmptyPage:
         entries = paginator.page(paginator.num_pages)
-    context = {'entries': entries}
+    context = {'entries': entries, 'host': request.META['HTTP_HOST']}
     return render(request, 'blog/page.html', add_universal_content(context))
 
 

@@ -82,7 +82,7 @@ def search(request):
         query_string = unicodedata.normalize('NFKC', query_string_base)
         entry_query = get_query(query_string, ['title', 'content'])
         found_entries = Entry.objects.filter(entry_query).order_by('-pub_date')
-        context = {'query_string': query_string_base}
+        context = {'query_string': query_string}
         return page(request, found_entries, html_file='blog/search.html', context=context)
     else:
         return index(request)

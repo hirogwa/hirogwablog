@@ -1,0 +1,40 @@
+{% extends "blog/entrylist.html" %}
+
+{% block load_statics %}
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/entry.css' %}"/>
+{% endblock %}
+
+{% block entry_footer %}
+<div class="entry_comment">
+  <div class="existing_comments">
+    {% for comment in comments %}
+    <h3 id="{{ comment.anchor_id }}">{{ comment.author }}</h3>
+    <span class="pub_date"><a href="{{ request.get_full_path }}#{{ comment.anchor_id }}">{{ comment.pub_date_string }}</a></span>
+    <p>{{ comment.content|linebreaks }}</p>
+    {% endfor %}
+  </div>
+  <div class="add_comment">
+    <h3 id="add_comment">add comment</h3>
+    <form class="comment_form" method="post" action="{% url 'blog:comment' entries.0.id %}">
+      {% csrf_token %}
+      <div class="comment_author">
+        <input id="author" type="text" aria-required="true" name="author" placeholder="Name (required)"/>
+      </div>
+      <div class="comment_email">
+        <input id="email" type="text" aria-required="true" name="email" placeholder="Email (required)" />
+      </div>
+      <div class="comment_content">
+        <label for="content"></label>
+        <textarea id="content" type="text" aria-required="true" name="content" placeholder="Comment..."></textarea>
+      </div>
+      <div class="comment_submit" >
+        <input id="submit" type="submit" value="post comment" name="submit" />
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block entry_list_footer %}
+{% endblock %}

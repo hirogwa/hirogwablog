@@ -1,6 +1,7 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import Entry, Blog, Category
+from models import Entry, Blog, Category, Comment
 from search import get_query
 import unicodedata
 
@@ -9,7 +10,8 @@ PER_PAGE = 10
 
 
 def index(request):
-    return unfiltered(request)
+    all_entries = Entry.objects.all().order_by('-pub_date')
+    return paginated_view(request, all_entries)
 
 
 def archive(request):
@@ -18,8 +20,8 @@ def archive(request):
     return render(request, 'blog/archive.html', add_universal_content(context))
 
 
-def page(request, entry_list, html_file='blog/page.html', context={}):
-
+# displays multiple entries with pagination
+def paginated_view(request, entry_list, html_file='blog/page.html', context={}):
     paginator = Paginator(entry_list, PER_PAGE)
     page_number = request.GET.get('page')
     try:
@@ -33,9 +35,12 @@ def page(request, entry_list, html_file='blog/page.html', context={}):
     return render(request, html_file, add_universal_content(context))
 
 
-def unfiltered(request):
-    all_entries = Entry.objects.all().order_by('-pub_date')
-    return page(request, all_entries)
+# displays single entry with no pagination
+def single_entry_view(request, entry_obj, html_file="blog/entry.html", context={}):
+    comments = Comment.objects.filter(entry=entry_obj.id).order_by('-pub_date')
+    context['entries'] = [entry_obj]
+    context['comments'] = comments
+    return render(request, html_file, add_universal_content(context))
 
 
 def entry_by_id(request, entry_id):
@@ -49,13 +54,12 @@ def entry_by_slug(request, slug_text):
 
 
 def entry(request, blog_entry):
-    entries = [blog_entry]
-    return page(request, entries)
+    return single_entry_view(request, blog_entry)
 
 
 def category(request, category_obj):
     entries = Entry.objects.filter(category=category_obj.id).order_by('-pub_date')
-    return page(request, entries, html_file="blog/category.html", context={"category_string": category_obj})
+    return paginated_view(request, entries, html_file="blog/category.html", context={"category_string": category_obj})
 
 
 def category_by_name(request, category_name):
@@ -83,6 +87,15 @@ def search(request):
         entry_query = get_query(query_string, ['title', 'content'])
         found_entries = Entry.objects.filter(entry_query).order_by('-pub_date')
         context = {'query_string': query_string}
-        return page(request, found_entries, html_file='blog/search.html', context=context)
+        return paginated_view(request, found_entries, html_file='blog/search.html', context=context)
     else:
+        return index(request)
+
+
+def comment(request, entry_id):
+    if request.method == 'POST':
+        print 'comment'
+        return HttpResponse('something')
+    else:
+        print 'thru'
         return index(request)

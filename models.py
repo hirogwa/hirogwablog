@@ -42,3 +42,26 @@ class Entry(models.Model):
             date.year, date.month, date.day, slugify(self.title)
         )
         super(Entry, self).save()
+
+
+class Comment(models.Model):
+    entry = models.ForeignKey(Entry)
+    author = models.CharField(max_length=60)
+    email = models.EmailField()
+    content = models.TextField()
+    pub_date = models.DateTimeField('published_time')
+
+    def anchor_id(self):
+        date = self.pub_date
+        return '%s-%d%02d%02d%02d%02d' % \
+            (self.author, date.year, date.month, date.day, date.hour, date.minute)
+
+    def pub_date_string(self):
+        date = self.pub_date
+        return '%d %02d %02d %02d:%02d' % \
+               (date.year, date.month, date.day, date.hour, date.minute)
+
+    def __unicode__(self):
+        date = self.pub_date
+        return '%i%02d%02d%02d%02d-%s-%s' % (
+            date.year, date.month, date.day, date.hour, date.minute, self.author, self.entry.title)

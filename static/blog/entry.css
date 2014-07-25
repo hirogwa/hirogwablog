@@ -1,0 +1,50 @@
+.entry_comment h3,
+.entry_comment h4 {
+  color: inherit;
+  font-weight: normal;
+}
+
+.entry_comment .existing_comments h3 {
+  margin-bottom: 0px;
+  margin-top: 25px;
+}
+
+.entry_comment .existing_comments p {
+  margin-top: 8px;
+}
+
+.entry_comment .existing_comments a {
+  color: inherit;
+}
+
+.entry_comment .pub_date {
+  font-size: 80%;
+}
+
+.comment_form {
+  float: center;
+  width: 75%;	
+}
+
+.entry_comment .add_comment input,
+.entry_comment .add_comment textarea {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.entry_comment .add_comment .comment_submit input {
+  float: right;
+  width: 20%;
+  padding-right: 20px;
+  height: 200%;
+}
+
+.entry_comment .add_comment .comment_content textarea {
+  height: 130px;
+}
+
+.entry_comment .add_comment h3 {
+  padding-top: 40px;
+  border-top: 0.5px solid #ccc;
+}

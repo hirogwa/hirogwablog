@@ -9,6 +9,7 @@ urlpatterns = patterns('',
                        url(r'^category/(?P<category_name>\S+)/$', views.category_by_name, name='category_by_name'),
                        url(r'^archive/$', views.archive, name='archive'),
                        url(r'^search/$', views.search, name='search'),
+                       url(r'^post-comment/(?P<entry_id>\d+)/$', views.comment, name='comment'),
 
                        url(r'^feed/$', LatestEntriesFeed(), name='feed'),
                        )

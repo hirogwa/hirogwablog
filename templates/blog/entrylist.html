@@ -17,7 +17,7 @@
 
 <div class="entry_list_header">
   {% block entry_list_header %}
-  {% endblock%}
+  {% endblock %}
 </div>
 
 {% if entries %}
@@ -41,11 +41,16 @@
     </div>
   </footer>
 </div>
+
+{% block entry_footer %}
+{% endblock %}
+
 {% endfor %}
 {% else %}
 <p>No entries are available.</p>
 {% endif %}
 
+{% block entry_list_footer %}
 <div class="pagination">
   <span class="step-links">
     {% if entries.has_previous %}
@@ -59,5 +64,6 @@
     {% endif %}
   </span>
 </div>
+{% endblock %}
 
 {% endblock %}

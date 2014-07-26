@@ -1,8 +1,9 @@
-from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from models import Entry, Blog, Category, Comment
 from search import get_query
+from datetime import datetime
+from django.http import HttpResponseRedirect
 import unicodedata
 
 
@@ -37,7 +38,7 @@ def paginated_view(request, entry_list, html_file='blog/page.html', context={}):
 
 # displays single entry with no pagination
 def single_entry_view(request, entry_obj, html_file="blog/entry.html", context={}):
-    comments = Comment.objects.filter(entry=entry_obj.id).order_by('-pub_date')
+    comments = Comment.objects.filter(entry=entry_obj.id).order_by('pub_date')
     context['entries'] = [entry_obj]
     context['comments'] = comments
     return render(request, html_file, add_universal_content(context))
@@ -45,7 +46,21 @@ def single_entry_view(request, entry_obj, html_file="blog/entry.html", context={
 
 def entry_by_id(request, entry_id):
     blog_entry = get_object_or_404(Entry, pk=entry_id)
-    return entry(request, blog_entry)
+
+    # POST request: comment
+    if request.method == 'POST':
+        params = request.POST
+        new_comment = Comment(entry=blog_entry,
+                              author=params.get('author'),
+                              email=params.get('email'),
+                              content=params.get('content'),
+                              pub_date=datetime.now())
+        new_comment.save()
+        return HttpResponseRedirect("/blog/entry-id/%d" % int(entry_id))
+
+    # otherwise, just a single-entry view
+    else:
+        return entry(request, blog_entry)
 
 
 def entry_by_slug(request, slug_text):
@@ -74,9 +89,11 @@ def add_universal_content(context):
 
 def add_sidebar_info(context):
     recent_entries = Entry.objects.order_by('-pub_date')[:10]
+    recent_comments = Comment.objects.order_by('-pub_date')[:7]
     categories = Category.objects.all()
     context['categories'] = categories
-    context['all_entries'] = recent_entries
+    context['recent_entries'] = recent_entries
+    context['recent_comments'] = recent_comments
     return context
 
 
@@ -89,13 +106,4 @@ def search(request):
         context = {'query_string': query_string}
         return paginated_view(request, found_entries, html_file='blog/search.html', context=context)
     else:
-        return index(request)
-
-
-def comment(request, entry_id):
-    if request.method == 'POST':
-        print 'comment'
-        return HttpResponse('something')
-    else:
-        print 'thru'
         return index(request)

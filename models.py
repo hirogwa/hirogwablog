@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+import urllib, hashlib
 
 
 class Blog(models.Model):
@@ -65,3 +66,10 @@ class Comment(models.Model):
         date = self.pub_date
         return '%i%02d%02d%02d%02d-%s-%s' % (
             date.year, date.month, date.day, date.hour, date.minute, self.author, self.entry.title)
+
+    def gravatar_url(self):
+        size = 60
+
+        gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
+        gravatar_url += urllib.urlencode({'s': str(size)})
+        return gravatar_url

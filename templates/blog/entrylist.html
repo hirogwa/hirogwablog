@@ -1,29 +1,36 @@
 {% extends "blog/base.html" %}
 
-{% block title %}{{ blog.name }}{% endblock %}
+{% block load_statics %}
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/entry.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/entrylist.css' %}"/>
+{% endblock %}
 
 {% block dependencies %}
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1537556219799439&version=v2.0";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1537556219799439&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}
 
 {% block contents %}
 
 <div class="entry_list_header">
-  {% block entry_list_header %}
-  {% endblock %}
+{% block entry_list_header %}
+{% endblock %}
 </div>
 
 {% if entries %}
 {% for entry in entries %}
 <div class="entry">
-  <h2><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></h2>
+<article>
+  <header>
+    <h2><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></h2>
+  </header>
   <p>{{ entry.content|safe }}</p>
   <footer class="entry_footer">
     <div class="pub_info">
@@ -40,6 +47,7 @@
       </div>
     </div>
   </footer>
+</article>
 </div>
 
 {% block entry_footer %}
@@ -52,17 +60,17 @@
 
 {% block entry_list_footer %}
 <div class="pagination">
-  <span class="step-links">
-    {% if entries.has_previous %}
-      <a href="?page={{ entries.previous_page_number }}">previous</a>
-    {% endif %}
+<span class="step-links">
+  {% if entries.has_previous %}
+    <a href="?page={{ entries.previous_page_number }}">previous</a>
+  {% endif %}
 
-    <span class="current">{{ entries.number }} of {{ entries.paginator.num_pages }}</span>
+  <span class="current">{{ entries.number }} of {{ entries.paginator.num_pages }}</span>
 
-    {% if entries.has_next %}
-      <a href="?page={{ entries.next_page_number }}">next</a>
-    {% endif %}
-  </span>
+  {% if entries.has_next %}
+    <a href="?page={{ entries.next_page_number }}">next</a>
+  {% endif %}
+</span>
 </div>
 {% endblock %}
 

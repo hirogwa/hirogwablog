@@ -32,16 +32,23 @@
     {% block sidebar %}
 
     <h3>category</h3>
-      {% for cat in categories %}
       <ul>
+      {% for cat in categories %}
         <li><a href="{% url 'blog:category_by_name' cat.name %}">{{ cat }}</a></li>
-      </ul>
       {% endfor %}
+      </ul>
+
+    <h3>recent comments</h3>
+      <ul>
+      {% for comment in recent_comments %}
+        <li><a href="{% url 'blog:entry' comment.entry.id %}#{{ comment.anchor_id }}">{{ comment.author }} <small>on <i>{{ comment.entry }}</i></small></a></li>
+      {% endfor %}
+      </ul>
 
     <h3>recent posts</h3>
       <ul>
         <div class="archive_list">
-        {% for entry in all_entries %}
+        {% for entry in recent_entries %}
           <li><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry }}</a></li>
         {% endfor %}
         </div>

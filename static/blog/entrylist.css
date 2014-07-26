@@ -1,0 +1,26 @@
+.entry_list_header h3 {
+  color: #333;
+  font-weight: normal;
+}
+
+.entry_list_header .query_string,
+.entry_list_header .category_string {
+  font-style: italic;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.pagination .current {
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+.pagination a {
+  color: inherit;
+}
+
+.page_bottom {
+  margin-top: 100px;
+}

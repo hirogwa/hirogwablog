@@ -1,3 +1,63 @@
+.entry h2 {
+  margin-bottom: 0px;
+  font-weight: normal;
+}
+
+.entry header {
+  text-align: left;
+}
+
+.entry h2 {
+  color: #333;
+}
+
+.entry {
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.entry h2 a,
+.entry_footer a {
+  color: inherit;
+}
+
+.entry footer {
+	margin-bottom: 60px;
+}
+
+.social_buttons {
+  float: left;
+  display: inline-block;
+}
+
+.fb-like {
+  float: left;
+  display: inline-block;
+}
+
+.twitter_share {
+  float: left;
+  display: inline-block;
+}
+
+.twitter-share-button {
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 2px;
+}
+
+.pub_info {
+  display: inline-block;
+}
+
+.entry footer {
+  border-top: 0.5px solid #ccc;
+  margin-top: 35px;
+  padding-top: 0px;
+  text-align: right;
+  font-style: inherit;
+}
+
 .entry_comment h3,
 .entry_comment h4 {
   color: inherit;
@@ -15,6 +75,21 @@
 
 .entry_comment .existing_comments a {
   color: inherit;
+}
+
+.existing_comments .existing_comment div {
+	margin-top: 0px;
+	display: inline-block;
+}
+
+.existing_comments .existing_comment .text {
+	margin-left: 10px;
+}
+
+.existing_comments .existing_comment img {
+	border-radius: 40% 40% 40% 40%;
+	width: 60px;
+	height: 60px;
 }
 
 .entry_comment .pub_date {
@@ -46,5 +121,4 @@
 
 .entry_comment .add_comment h3 {
   padding-top: 40px;
-  border-top: 0.5px solid #ccc;
 }

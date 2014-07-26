@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 class LatestEntriesFeed(Feed):
     title = 'hirogwa blog'
-    link = '/feed/'
+    link = '/blog/feed/'
     description = 'When I get sad, I stop being sad and be awesome instead. True story.'
 
     def items(self):

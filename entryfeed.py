@@ -1,5 +1,6 @@
 from django.contrib.syndication.views import Feed
 from blog.models import Entry
+from bs4 import BeautifulSoup
 
 
 class LatestEntriesFeed(Feed):
@@ -14,4 +15,5 @@ class LatestEntriesFeed(Feed):
         return entry.title
 
     def item_description(self, entry):
-        return entry.content
+        parsed = BeautifulSoup(entry.content)
+        return '%s [...]' % parsed.p

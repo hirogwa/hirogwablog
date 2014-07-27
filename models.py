@@ -39,9 +39,10 @@ class Entry(models.Model):
 
     def save(self):
         date = self.pub_date
-        self.slug = '%i%02d%02d-%s' % (
-            date.year, date.month, date.day, slugify(self.title)
-        )
+        if self.slug == '':
+            self.slug = '%i%02d%02d-%s' % (
+                date.year, date.month, date.day, slugify(self.title)
+            )
         super(Entry, self).save()
 
 

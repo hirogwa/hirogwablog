@@ -37,7 +37,8 @@ def entry_new(request):
             return HttpResponse(entry_template())
 
         elif request.method == 'POST':
-            params_base = request.POST.get('body')
+            content = request.POST
+            params_base = content.get('body')
             params = BeautifulSoup(params_base)
             blog_obj = Blog.objects.get(pk=1)
             category_obj = get_object_or_404(Category, name=params.entry_category.get_text())
@@ -77,8 +78,9 @@ def entry_update(request):
         return HttpResponseServerError(str(e))
 
 
-def entry_template(entry_id=0, title='', slug='', content='', category='', pub_date=None):
-    response = '<entry_id>%d</entry_id>' % entry_id + '\n'
+def entry_template(entry_id=-1, title='', slug='', content='', category='', pub_date=None):
+    response = 'body=' + '\n'
+    response += '<entry_id>%d</entry_id>' % entry_id + '\n'
     response += '<entry_title>' + title + '</entry_title>' + '\n'
     response += '<entry_content>' + content + '</entry_content>' + '\n'
     response += '<entry_slug>' + slug + '</entry_slug>' + '\n'

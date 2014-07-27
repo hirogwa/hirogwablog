@@ -34,9 +34,7 @@ def entry(request, entry_id):
 def entry_new(request):
     try:
         if request.method == 'GET':
-            return HttpResponse(entry_template(title='(title)',
-                                               slug='(slug)',
-                                               content='(content)'))
+            return HttpResponse(entry_template())
 
         elif request.method == 'POST':
             params_base = request.POST.get('body')

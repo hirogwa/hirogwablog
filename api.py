@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
+from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from models import Blog, Category, Entry
 from search import get_query
@@ -41,7 +42,6 @@ def entry(request, entry_id):
                                        pub_date=entry_obj.pub_date))
 
 
-@csrf_exempt
 def entry_new(request):
     try:
         if request.method == 'GET':
@@ -55,28 +55,37 @@ def entry_new(request):
 def entry_push(request):
     try:
         if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(username=username, password=password)
+            if user is None:
+                return HttpResponseForbidden('The username and password are incorrect.')
+            elif not user.is_active:
+                return HttpResponseForbidden('The account has been disabled.')
+
             params_base = request.POST.get('body')
             params = BeautifulSoup(params_base)
-
             if int(params.entry_id.get_text()) > 0:
                 return update_entry(params)
             else:
                 return create_entry(params)
     except Exception as e:
+        print e
         return HttpResponseServerError(str(e))
 
 
 def create_entry(params):
     blog_obj = Blog.objects.get(pk=1)
-    category_obj = get_object_or_404(Category, name=params.entry_category.get_text())
+    category_obj = get_object_or_404(Category, name=params.entry_category.get_text().strip())
 
     entry_content = ''
     for child in params.entry_content.children:
         entry_content += str(child)
 
     entry_obj = Entry(blog=blog_obj,
-                      title=params.entry_title.contents[0],
-                      slug=params.entry_slug.get_text(),
+                      title=params.entry_title.contents[0].strip(),
+                      slug=params.entry_slug.get_text().strip(),
                       category=category_obj,
                       content=entry_content,
                       pub_date=datetime.now()
@@ -87,14 +96,14 @@ def create_entry(params):
 
 def update_entry(params):
     target_entry = get_object_or_404(Entry, pk=int(params.entry_id.get_text()))
-    category_obj = get_object_or_404(Category, name=params.entry_category.get_text())
+    category_obj = get_object_or_404(Category, name=params.entry_category.get_text().strip())
 
     entry_content = ''
     for child in params.entry_content.children:
         entry_content += str(child)
 
-    target_entry.title = params.entry_title.contents[0]
-    target_entry.slug = params.entry_slug.get_text()
+    target_entry.title = params.entry_title.contents[0].strip()
+    target_entry.slug = params.entry_slug.get_text().strip()
     target_entry.category = category_obj
     target_entry.content = entry_content
 

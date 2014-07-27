@@ -71,18 +71,13 @@ class BlogCli(cmd.Cmd):
         f.close()
 
     def do_push(self, line):
-        opts, args = getopt.getopt(line.split(), 'f:')
-
-        filename = ''
-        for o, a in opts:
-            if o == '-f':
-                filename = a
+        filename = line
 
         if self.host == '':
             print 'host empty. call host command to set the target host'
             return False
         if filename == '':
-            print 'filename unspecified (-f)'
+            print 'filename unspecified'
             return False
 
         username = raw_input('Username: ')

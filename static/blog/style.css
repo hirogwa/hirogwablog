@@ -46,19 +46,6 @@ p {
   overflow: hidden;
 }
 
-blockquote {
-  font-style: italic;
-  font-weight: lighter;
-  border-left: 3px solid #ccc;
-  padding-left: 20px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-
-blockquote p {
-  display: inline;
-}
-
 .grid_3 h3 {
   color: #333;
   font-weight: normal;

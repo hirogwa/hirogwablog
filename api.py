@@ -37,16 +37,21 @@ def entry_new(request):
             return HttpResponse(entry_template())
 
         elif request.method == 'POST':
-            content = request.POST
-            params_base = content.get('body')
+            params_base = request.POST.get('body')
             params = BeautifulSoup(params_base)
+
             blog_obj = Blog.objects.get(pk=1)
             category_obj = get_object_or_404(Category, name=params.entry_category.get_text())
+
+            entry_content = ''
+            for child in params.entry_content.children:
+                entry_content += str(child)
+
             entry_obj = Entry(blog=blog_obj,
-                              title=params.entry_title.get_text(),
+                              title=params.entry_title.contents[0],
                               slug=params.entry_slug.get_text(),
                               category=category_obj,
-                              content=params.entry_content.get_text(),
+                              content=entry_content,
                               pub_date=datetime.now()
                               )
             entry_obj.save()
@@ -67,10 +72,14 @@ def entry_update(request):
         target_entry = get_object_or_404(Entry, pk=int(params.entry_id.get_text()))
         category_obj = get_object_or_404(Category, name=params.entry_category.get_text())
 
-        target_entry.title = params.entry_title.get_text()
+        entry_content = ''
+        for child in params.entry_content.children:
+            entry_content += str(child)
+
+        target_entry.title = params.entry_title.contents[0]
         target_entry.slug = params.entry_slug.get_text()
         target_entry.category = category_obj
-        target_entry.content = params.entry_content.get_text()
+        target_entry.content = entry_content
 
         target_entry.save()
         return HttpResponse('success')

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from entryfeed import LatestEntriesFeed
-import views
+import api, views
 
 urlpatterns = patterns('',
                        url(r'^$', views.index, name='index'),
@@ -14,4 +14,10 @@ urlpatterns = patterns('',
                        url(r'^search/$', views.search, name='search'),
 
                        url(r'^feed/$', LatestEntriesFeed(), name='feed'),
+
+                       # api
+                       url(r'^api/entry/list/(?P<keyword>\S+)/$', api.entry_list),
+                       url(r'^api/entry/new/$', api.entry_new),
+                       url(r'^api/entry/update/$', api.entry_update),
+                       url(r'^api/entry/(?P<entry_id>\d+)/$', api.entry),
                        )

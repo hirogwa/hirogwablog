@@ -69,7 +69,6 @@ class Comment(models.Model):
 
     def gravatar_url(self):
         size = 60
-
         gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
         gravatar_url += urllib.urlencode({'s': str(size)})
         return gravatar_url

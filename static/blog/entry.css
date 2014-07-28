@@ -32,7 +32,7 @@ blockquote {
 
 .entry iframe {
   display: block;
-  margin: 35px auto;
+  margin: 0 auto;
 }
 
 .entry footer {

@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
-from entryfeed import LatestEntriesFeed
-import api, views
+from feed import LatestEntriesFeed, RecentCommentsFeed
+import api
+import views
 
 urlpatterns = patterns('',
                        url(r'^$', views.index, name='index'),
@@ -13,7 +14,9 @@ urlpatterns = patterns('',
                        url(r'^archive/$', views.archive, name='archive'),
                        url(r'^search/$', views.search, name='search'),
 
+                       # feed
                        url(r'^feed/$', LatestEntriesFeed(), name='feed'),
+                       url(r'^feed/comment/$', RecentCommentsFeed(), name='feed_comments'),
 
                        # api
                        url(r'^api/entry/list/$', api.entry_list),

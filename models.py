@@ -73,3 +73,6 @@ class Comment(models.Model):
         gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
         gravatar_url += urllib.urlencode({'s': str(size)})
         return gravatar_url
+
+    def get_absolute_url(self):
+        return '/blog/entry-id/%d/#%s' % (self.entry.id, self.anchor_id())

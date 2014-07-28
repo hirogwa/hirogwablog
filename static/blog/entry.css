@@ -30,6 +30,11 @@ blockquote {
   padding-bottom: 15px;
 }
 
+.entry iframe {
+  display: block;
+  margin: 35px auto;
+}
+
 .entry footer {
 	margin-bottom: 60px;
 }

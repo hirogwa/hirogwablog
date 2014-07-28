@@ -26,7 +26,6 @@ class BlogCli(cmd.Cmd):
 
         opts, args = getopt.getopt(line.split(), 'k:')
 
-        host = ''
         keyword = ''
         for o, a in opts:
             if o == '-k':
@@ -36,10 +35,10 @@ class BlogCli(cmd.Cmd):
             print 'host empty. call host command to set the target host'
             return False
         if keyword == '':
-            url = urlparse.urljoin(host, BlogCli.URL_ENTRY_LIST)
+            url = urlparse.urljoin(self.host, BlogCli.URL_ENTRY_LIST)
             print 'recent post list with no filter'
         else:
-            url = urlparse.urljoin(host, BlogCli.URL_ENTRY_LIST + keyword)
+            url = urlparse.urljoin(self.host, BlogCli.URL_ENTRY_LIST + keyword)
             print 'recent post list with filter: %s' % keyword
 
         print urllib2.urlopen(url).read()

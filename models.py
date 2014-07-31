@@ -6,6 +6,7 @@ import urllib, hashlib
 class Blog(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
+    facebook_app_id = models.CharField(max_length=30)
 
     def __unicode__(self):
         return self.name
@@ -40,9 +41,11 @@ class Entry(models.Model):
     def save(self):
         date = self.pub_date
         if self.slug == '':
-            self.slug = '%i%02d%02d-%s' % (
-                date.year, date.month, date.day, slugify(self.title)
-            )
+            slug_base = self.title
+        else:
+            slug_base = self.slug
+
+        self.slug = '%i%02d%02d-%s' % (date.year, date.month, date.day, slugify(slug_base))
         super(Entry, self).save()
 
 

@@ -1,3 +1,3 @@
 hirogwablog
 ===========
-### python/Django experiment.
+some python/Django experiment.

@@ -43,7 +43,7 @@ class Entry(models.Model):
         if self.slug == '':
             slug_base = self.title
             self.slug = '%i%02d%02d-%s' % (date.year, date.month, date.day, slugify(slug_base))
-            super(Entry, self).save()
+        super(Entry, self).save()
 
 
 class Comment(models.Model):

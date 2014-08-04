@@ -18,8 +18,10 @@
 {% block dependencies %}
 {% endblock %}
 <header class="blog_title">
-  <h1><a href="{% url 'blog:index' %}">{{ blog.name }}</a></h1>
-  <h2>{{ blog.description }}</h2>
+  <h1>
+    <a href="{% url 'blog:index' %}">{{ blog.name }}</a>
+    <small>{{ blog.description }}</small>
+  </h1>
 </header>
 
 <div class="container_12">

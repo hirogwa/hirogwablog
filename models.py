@@ -42,11 +42,8 @@ class Entry(models.Model):
         date = self.pub_date
         if self.slug == '':
             slug_base = self.title
-        else:
-            slug_base = self.slug
-
-        self.slug = '%i%02d%02d-%s' % (date.year, date.month, date.day, slugify(slug_base))
-        super(Entry, self).save()
+            self.slug = '%i%02d%02d-%s' % (date.year, date.month, date.day, slugify(slug_base))
+            super(Entry, self).save()
 
 
 class Comment(models.Model):

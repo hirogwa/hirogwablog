@@ -47,16 +47,18 @@ h4 a:hover {
 .entry_list_header h3 {
     color: inherit;
 }
-
 .entry_list_header .query_string,
-.entry_list_header .category_string {
+.entry_list_header .category_string,
+.entry_list_header .tag_name {
     font-style: italic;
 }
-
-.entry p a {
+.entry .entry_footer {
+    border-top: 1px solid #ddd;
+}
+.entry p a,
+.entry .entry_footer a {
     text-decoration: underline;
 }
-
 .entry_comment h3,
 .entry_comment h4 {
     color: inherit;

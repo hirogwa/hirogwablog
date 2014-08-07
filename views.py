@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import Entry, Blog, Category, Comment
+from models import Entry, Blog, Category, Comment, Tag
 from search import get_query
 from datetime import datetime
 from django.http import HttpResponseRedirect
@@ -80,6 +80,15 @@ def category(request, category_obj):
 def category_by_name(request, category_name):
     cat = get_object_or_404(Category, name=category_name)
     return category(request, cat)
+
+
+def tag(request, tag_name):
+    tag_map = Tag.objects.filter(name=tag_name)
+    entry_ids = []
+    for pair in tag_map:
+        entry_ids.append(pair.entry.id)
+    entries = Entry.objects.filter(pk__in=entry_ids).order_by('-pub_date')
+    return paginated_view(request, entries, html_file="blog/tag.html", context={"tag_name": tag_name})
 
 
 def add_universal_content(context):

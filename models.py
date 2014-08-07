@@ -39,6 +39,13 @@ class Entry(models.Model):
     slug = models.SlugField()
     pub_date = models.DateTimeField('published_time')
 
+    def tags(self):
+        return Tag.objects.filter(entry=self.id)
+
+    def spaced_datetime(self):
+        return '%d %02d %02d %02d:%02d' % \
+               (self.pub_date.year, self.pub_date.month, self.pub_date.day, self.pub_date.hour, self.pub_date.minute)
+
     def spaced_date(self):
         return '%d %02d %02d' % \
             (self.pub_date.year, self.pub_date.month, self.pub_date.day)
@@ -55,6 +62,14 @@ class Entry(models.Model):
             slug_base = self.title
             self.slug = '%i%02d%02d-%s' % (date.year, date.month, date.day, slugify(slug_base))
         super(Entry, self).save()
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
+    entry = models.ForeignKey(Entry, db_index=True)
+
+    def __unicode__(self):
+        return '%s,%s' % (self.name, self.entry.title)
 
 
 class Comment(models.Model):

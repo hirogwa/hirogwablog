@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import Entry, Blog, Category, Comment
+from models import Entry, Blog, Category, Comment, Theme
 from search import get_query
 from datetime import datetime
 from django.http import HttpResponseRedirect
@@ -8,6 +8,7 @@ import unicodedata
 
 
 PER_PAGE = 10
+PER_PAGE_ADMIN_POSTS = 50
 
 
 def index(request):
@@ -107,3 +108,39 @@ def search(request):
         return paginated_view(request, found_entries, html_file='blog/search.html', context=context)
     else:
         return index(request)
+
+
+def admin_general(request):
+    if request.method == 'POST':
+        params = request.POST
+        theme = get_object_or_404(Theme, name=params.get('theme'))
+        blog = get_object_or_404(Blog, pk=1)
+        blog.name = params.get('name')
+        blog.description = params.get('description')
+        blog.facebook_app_id = params.get('facebook_app_id')
+        blog.theme = theme
+        blog.save()
+        return HttpResponseRedirect("/blog/admin/general")
+    else:
+        context = {}
+        return render(request, 'blog/admin_general.html', add_universal_content(context))
+
+
+def admin_posts(request):
+    context = {}
+    all_entries = Entry.objects.order_by('-pub_date')
+    paginator = Paginator(all_entries, PER_PAGE_ADMIN_POSTS)
+    page_number = request.GET.get('page')
+    try:
+        entries = paginator.page(page_number)
+    except PageNotAnInteger:
+        entries = paginator.page(1)
+    except EmptyPage:
+        entries = paginator.page(paginator.num_pages)
+    context['entries'] = entries
+    return render(request, 'blog/admin_posts.html', add_universal_content(context))
+
+
+def admin_comments(request):
+    context = {}
+    return render(request, 'blog/admin_comments.html', add_universal_content(context))

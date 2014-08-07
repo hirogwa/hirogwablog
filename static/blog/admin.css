@@ -1,0 +1,80 @@
+body {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.navigation {
+    width: 160px;
+    float: left;
+    background-color: #444;
+    color: #eee;
+    display: inline;
+}
+
+.navigation .menu-item a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    padding: 15px 20px;
+}
+
+.navigation .menu-item a:hover {
+    background: #666;
+}
+
+.navigation ul {
+    list-style-type: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+.navigation li {
+    display: block;
+}
+
+.configuration {
+    float: left;
+    margin-left: 20px;
+    display: inline;
+    width: 800px;
+}
+
+.configuration .setting-list td {
+    padding: 20px 0;
+}
+.configuration .setting-list th {
+    width: 200px;
+    text-align: left;
+}
+
+.configuration .setting-list .setting-text {
+    width: 350px;
+}
+
+select {
+    height: 25px;
+    line-height: 25px;
+}
+
+.configuration .posts-config table,
+.configuration .posts-config th,
+.configuration .posts-config td {
+    text-align: left;
+    border: solid 1px;
+    padding: 15px 0;
+}
+.configuration .posts-config thead .title {
+    width: 400px;
+}
+.configuration .posts-config thead .category,
+.configuration .posts-config thead .tags,
+.configuration .posts-config thead .published-date {
+    width: 150px;
+}
+
+.configuration #submit {
+    cursor: pointer;
+    border-style: solid 1px;
+    height: 30px;
+    width: 120;
+}

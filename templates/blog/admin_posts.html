@@ -1,0 +1,48 @@
+{% extends "blog/admin.html" %}
+{% block dependencies %}
+{% load staticfiles %}
+<script src="{% static 'blog/posts.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block configuration %}
+<h2>
+  Posts
+  <small><a href="#" id="add-post">Add New</a></small>
+</h2>
+<div id="new-post">
+</div>
+<table class="posts-config">
+  <thead>
+    <tr>
+      <th class="title">
+        Title
+      </th>
+      <th class="category">
+        Category
+      </th>
+      <th class="tags">
+        Tags
+      </th>
+      <th class="published-date">
+        Published Date
+      </th>
+    </tr>
+  </thead>
+  {% for entry in entries %}
+  <tr>
+    <th>
+      {{ entry.title }}
+    </th>
+    <td>
+      {{ entry.category }}
+    </td>
+    <td>
+      days, sunshine
+    </td>
+    <td>
+      {{ entry.spaced_datetime }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

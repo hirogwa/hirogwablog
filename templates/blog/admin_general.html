@@ -1,0 +1,58 @@
+{% extends "blog/admin.html" %}
+{% block dependencies %}
+{% load staticfiles %}
+<script src="{% static 'blog/general.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block configuration %}
+<h2>General Settings</h2>
+<form class="configuration_form" method="post" action="{% url 'blog:admin_general' %}">
+  {% csrf_token %}
+  <table class="setting-list">
+    <tr>
+      <th>
+        blog title
+      </th>
+      <td>
+        <input class="setting-text" name="name" type="text" value="{{ blog.name }}">
+      </td>
+    </tr>
+    <tr>
+      <th>
+        description
+      </th>
+      <td>
+        <input class="setting-text" name="description" type="text" value="{{ blog.description }}">
+      </td>
+    </tr>
+    <tr>
+        <th>
+          color theme
+        </th>
+        <td>
+          <select name="theme">
+            <option>
+            {{ blog.theme }}
+            </option>
+          </select>
+            <span id="add-theme">
+              add theme
+            </span>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Facebook app id
+      </th>
+      <td>
+        <input class="setting-text" name="facebook_app_id" type="text" value="{{ blog.facebook_app_id }}">
+      </td>
+    </tr>
+  </table>
+  <p class="submit">
+  <input id="submit" type="submit" value="Save Changes" name="submit">
+  </p>
+</form>
+<div id="dialogs">
+</div>
+{% endblock %}

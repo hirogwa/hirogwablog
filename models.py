@@ -1,12 +1,23 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-import urllib, hashlib
+import urllib
+import hashlib
+
+
+class Theme(models.Model):
+    name = models.CharField(max_length=50)
+    css_file = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __unicode__(self):
+        return self.name
 
 
 class Blog(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     facebook_app_id = models.CharField(max_length=30)
+    theme = models.ForeignKey(Theme)
 
     def __unicode__(self):
         return self.name
@@ -27,6 +38,10 @@ class Entry(models.Model):
     content = models.TextField()
     slug = models.SlugField()
     pub_date = models.DateTimeField('published_time')
+
+    def spaced_datetime(self):
+        return '%d %02d %02d %02d:%02d' % \
+               (self.pub_date.year, self.pub_date.month, self.pub_date.day, self.pub_date.hour, self.pub_date.minute)
 
     def spaced_date(self):
         return '%d %02d %02d' % \

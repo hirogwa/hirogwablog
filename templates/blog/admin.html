@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/admin.css' %}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
+    {% block dependencies %}
+    {% endblock %}
+    <meta charset="UTF-8">
+    <title>Site Configuration - {{ blog.name }}</title>
+  </head>
+  <body>
+    <div class="navigation">
+      <ul>
+        <li class="menu-item"><a href="{% url 'blog:admin_general' %}">General</a></li>
+        <li class="menu-item"><a href="{% url 'blog:admin_posts' %}">Posts</a></li>
+        <li class="menu-item"><a href="{% url 'blog:admin_comments' %}">Comments</a></li>
+        <li></li>
+      </ul>
+    </div>
+
+    <div class="configuration">
+      {% block configuration %}
+      {% endblock %}
+    </div>
+
+  </body>
+</html>

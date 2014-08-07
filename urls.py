@@ -24,4 +24,10 @@ urlpatterns = patterns('',
                        url(r'^api/entry/new/$', api.entry_new),
                        url(r'^api/entry/$', api.entry_push),
                        url(r'^api/entry/(?P<entry_id>\d+)/$', api.entry),
+
+                       # admin
+                       url(r'^admin/$', views.admin_general, name='admin'),
+                       url(r'^admin/general/$', views.admin_general, name='admin_general'),
+                       url(r'^admin/posts/$', views.admin_posts, name='admin_posts'),
+                       url(r'^admin/comments/$', views.admin_comments, name='admin_comments'),
                        )

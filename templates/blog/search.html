@@ -6,10 +6,10 @@
 
 {% block pagination %}
 {% if entries.has_previous %}
-<a href="?search={{ query_string }}&page={{ entries.previous_page_number }}">previous</a>
+<a href="?q={{ query_string }}&page={{ entries.previous_page_number }}">previous</a>
 {% endif %}
 <span class="current">{{ entries.number }} of {{ entries.paginator.num_pages }}</span>
 {% if entries.has_next %}
-<a href="?search={{ query_string }}&page={{ entries.next_page_number }}">next</a>
+<a href="?q={{ query_string }}&page={{ entries.next_page_number }}">next</a>
 {% endif %}
 {% endblock %}

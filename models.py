@@ -1,12 +1,23 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-import urllib, hashlib
+import urllib
+import hashlib
+
+
+class Theme(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=400)
+    css_file = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Blog(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     facebook_app_id = models.CharField(max_length=30)
+    theme = models.ForeignKey(Theme)
 
     def __unicode__(self):
         return self.name

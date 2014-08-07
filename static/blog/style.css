@@ -6,7 +6,14 @@ body {
     color: #ddd;
     background-color: rgb(17,16,16);
 }
-
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    color: #fcc;
+}
 h1,
 h2,
 h3,
@@ -14,16 +21,13 @@ h4 {
     font-weight: lighter;
     color: #f64;
 }
-
-a {
+h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover {
+    text-decoration: none;
     color: inherit;
-    text-decoration: none;
 }
-
-a:hover {
-    text-decoration: none;
-}
-
 .blog_title {
     padding-top: 0px;
     padding-bottom: 20px;
@@ -51,11 +55,6 @@ a:hover {
 
 .entry p a {
     text-decoration: underline;
-}
-
-.entry p a:hover,
-.archive a:hover {
-    color: #fdd;
 }
 
 .entry_comment h3,

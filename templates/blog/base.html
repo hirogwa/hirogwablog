@@ -4,7 +4,7 @@
   <link href="{% url 'blog:feed' %}" rel="alternate" type="application/rss+xml" title="{{ blog.name }}" />
   {% load staticfiles %}
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static blog.theme.css_file %}"/>
   <link rel="stylesheet" type="text/css" href="{% static 'blog/grid.css' %}"/>
   {% block load_statics %}
   {% endblock %}

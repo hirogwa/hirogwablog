@@ -63,6 +63,9 @@ h4 a:hover {
 .entry_comment h4 {
     color: inherit;
 }
+.gravatar img {
+    border-radius: 50% 50% 50% 50%;
+}
 
 /*
  * side bar

@@ -18,9 +18,13 @@ class Blog(models.Model):
     description = models.TextField()
     facebook_app_id = models.CharField(max_length=30)
     theme = models.ForeignKey(Theme)
+    author_email = models.EmailField()
 
     def __unicode__(self):
         return self.name
+
+    def gravatar_url(self):
+        return gravatar_url(self.author_email, 150)
 
 
 class Category(models.Model):
@@ -95,10 +99,13 @@ class Comment(models.Model):
             date.year, date.month, date.day, date.hour, date.minute, self.author, self.entry.title)
 
     def gravatar_url(self):
-        size = 60
-        gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.email.lower()).hexdigest() + "?"
-        gravatar_url += urllib.urlencode({'s': str(size)})
-        return gravatar_url
+        return gravatar_url(self.email, 60)
 
     def get_absolute_url(self):
         return '/blog/entry-id/%d/#%s' % (self.entry.id, self.anchor_id())
+
+
+def gravatar_url(email, size):
+    url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"
+    url += urllib.urlencode({'s': str(size)})
+    return url

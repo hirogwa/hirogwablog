@@ -44,7 +44,11 @@ class Entry(models.Model):
     pub_date = models.DateTimeField('published_time')
 
     def tags(self):
-        return Tag.objects.filter(entry=self.id)
+        tagmap = TagMap.objects.filter(entry=self.id)
+        tags = []
+        for map in tagmap:
+            tags.append(map.tag)
+        return tags
 
     def spaced_datetime(self):
         return '%d %02d %02d %02d:%02d' % \
@@ -60,20 +64,59 @@ class Entry(models.Model):
     def __unicode__(self):
         return self.title
 
-    def save(self):
+    def save(self, *args, **kwargs):
         date = self.pub_date
         if self.slug == '':
             slug_base = self.title
             self.slug = '%i%02d%02d-%s' % (date.year, date.month, date.day, slugify(slug_base))
-        super(Entry, self).save()
+        super(Entry, self).save(*args, **kwargs)
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=100)
+    occurrence = models.IntegerField()
+
+    def __unicode__(self):
+        return self.name
+
+
+class TagMap(models.Model):
+    tag = models.ForeignKey(Tag, db_index=True)
     entry = models.ForeignKey(Entry, db_index=True)
 
     def __unicode__(self):
-        return '%s,%s' % (self.name, self.entry.title)
+        return '%s,%s' % (self.tag, self.entry.title)
+
+    def delete(self, *args, **kwargs):
+        if self.pk is not None:
+            original = TagMap.objects.get(pk=self.pk)
+            original.tag.occurrence -= 1
+            if original.tag.occurrence < 1:
+                original.tag.delete()
+            else:
+                original.tag.save()
+        super(TagMap, self).delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        occurrence_incr = 1
+
+        duplicates = TagMap.objects.filter(tag=self.tag).filter(entry=self.entry)
+        if len(duplicates) > 0:
+            duplicates[0].delete()
+            occurrence_incr = 0
+
+        if self.pk is not None:
+            original = TagMap.objects.get(pk=self.pk)
+            original.tag.occurrence -= 1
+            if original.tag.occurrence < 1:
+                original.tag.delete()
+            else:
+                original.tag.save()
+
+        print occurrence_incr
+        self.tag.occurrence += occurrence_incr
+        self.tag.save()
+        super(TagMap, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):

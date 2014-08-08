@@ -37,7 +37,13 @@
     <div class="gravatar">
       <img src="{{ blog.gravatar_url }}" alt="hirogwa">
     </div>
-    <h3>category</h3>
+    <h3>tags</h3>
+      <ul>
+      {% for tag in tags %}
+        <li><a href="{% url 'blog:tag' tag.name %}">{{ tag.name }}</a></li>
+      {% endfor %}
+      </ul>
+    <h3>categories</h3>
       <ul>
       {% for cat in categories %}
         <li><a href="{% url 'blog:category_by_name' cat.name %}">{{ cat }}</a></li>

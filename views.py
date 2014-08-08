@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import Entry, Blog, Category, Comment, Tag
+from models import Entry, Blog, Category, Comment, Tag, TagMap
 from search import get_query
 from datetime import datetime
 from django.http import HttpResponseRedirect
@@ -83,7 +83,8 @@ def category_by_name(request, category_name):
 
 
 def tag(request, tag_name):
-    tag_map = Tag.objects.filter(name=tag_name)
+    tag = Tag.objects.get(name=tag_name)
+    tag_map = TagMap.objects.filter(tag=tag)
     entry_ids = []
     for pair in tag_map:
         entry_ids.append(pair.entry.id)
@@ -100,6 +101,8 @@ def add_sidebar_info(context):
     recent_entries = Entry.objects.order_by('-pub_date')[:10]
     recent_comments = Comment.objects.order_by('-pub_date')[:7]
     categories = Category.objects.all()
+    tags = Tag.objects.order_by('-occurrence')[:20]
+    context['tags'] = tags
     context['categories'] = categories
     context['recent_entries'] = recent_entries
     context['recent_comments'] = recent_comments

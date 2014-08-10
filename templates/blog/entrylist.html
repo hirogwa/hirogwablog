@@ -1,10 +1,5 @@
 {% extends "blog/base.html" %}
 
-{% block load_statics %}
-  {% load staticfiles %}
-  <link rel="stylesheet" type="text/css" href="{% static 'blog/entry.css' %}"/>
-{% endblock %}
-
 {% block dependencies %}
 <div id="fb-root"></div>
 <script>(function(d, s, id) {

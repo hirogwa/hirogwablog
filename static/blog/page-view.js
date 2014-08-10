@@ -30,6 +30,9 @@ function setTagCloud() {
 }
 
 function getFontSizeEm(tag) {
+    if (totalOccurrence < 7) {
+        return 1;
+    }
     baseVal = (tag.occurrence / totalOccurrence) * 10;
     if (baseVal > 2.5) {
         return 2.5;

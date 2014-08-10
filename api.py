@@ -4,9 +4,24 @@ from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
-from models import Blog, Category, Entry
+from models import Blog, Category, Entry, Tag
 from search import get_query
+import json
 import unicodedata
+
+
+def tags(request):
+    frequent_tags = Tag.objects.order_by('name')
+    tag_list = []
+    for tag in frequent_tags:
+        tag_json = dict()
+        tag_json['name'] = tag.name
+        tag_json['url'] = '/blog/tag/' + tag.name
+        tag_json['occurrence'] = tag.occurrence
+        tag_list.append(tag_json)
+
+    resp = {'tags': tag_list}
+    return HttpResponse(json.dumps(resp), content_type='application/json')
 
 
 def entry_list_filter(request, keyword):

@@ -101,7 +101,7 @@ def add_sidebar_info(context):
     recent_entries = Entry.objects.order_by('-pub_date')[:10]
     recent_comments = Comment.objects.order_by('-pub_date')[:7]
     categories = Category.objects.all()
-    tags = Tag.objects.order_by('-occurrence')[:20]
+    tags = Tag.objects.order_by('name')
     context['tags'] = tags
     context['categories'] = categories
     context['recent_entries'] = recent_entries

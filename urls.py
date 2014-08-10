@@ -20,10 +20,13 @@ urlpatterns = patterns('',
                        url(r'^feed/$', LatestEntriesFeed(), name='feed'),
                        url(r'^feed/comment/$', RecentCommentsFeed(), name='feed_comments'),
 
-                       # api
+                       # api(entry)
                        url(r'^api/entry/list/$', api.entry_list),
                        url(r'^api/entry/list/(?P<keyword>\S+)/$', api.entry_list_filter),
                        url(r'^api/entry/new/$', api.entry_new),
                        url(r'^api/entry/$', api.entry_push),
                        url(r'^api/entry/(?P<entry_id>\d+)/$', api.entry),
+
+                       # api(tag)
+                       url(r'^api/tags/$', api.tags),
                        )

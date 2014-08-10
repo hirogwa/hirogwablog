@@ -148,9 +148,6 @@ body {
 .sidebar li {
   margin-top: 7px;
   margin-bottom: 7px; }
-.sidebar .tag-cloud li {
-  display: inline;
-  font-size: 70%; }
 .sidebar .search_form {
   margin-top: 50px; }
 .sidebar .archive_all li {

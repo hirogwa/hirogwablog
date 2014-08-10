@@ -1,10 +1,5 @@
 {% extends "blog/entrylist.html" %}
 
-{% block load_statics %}
-  {% load staticfiles %}
-  <link rel="stylesheet" type="text/css" href="{% static 'blog/entry.css' %}"/>
-{% endblock %}
-
 {% block entry_footer %}
 <div class="entry_comment">
   <div class="existing_comments">

@@ -11,8 +11,13 @@ function setTagCloud() {
             $('.tag-cloud li').remove();
             $('.tag-cloud ul').css('font-size', '100%');
             totalOccurrence = 0;
+            maxOccurrence = 0;
             for (var idx in data.tags) {
-                totalOccurrence += data.tags[idx].occurrence;
+                occ = data.tags[idx].occurrence;
+                totalOccurrence += occ;
+                if (maxOccurrence < occ) {
+                    maxOccurrence = occ;
+                }
             }
             for (var idx in data.tags) {
                 tagJ = data.tags[idx];
@@ -33,8 +38,8 @@ function getFontSizeEm(tag) {
     if (totalOccurrence < 7) {
         return 1;
     }
-    maxSize = 4;
+    maxSize = 2;
     minSize = 0.7;
-    baseVal = (tag.occurrence / totalOccurrence);
+    baseVal = (tag.occurrence / maxOccurrence);
     return baseVal * (maxSize - minSize) + minSize;
 }

@@ -9,7 +9,7 @@ function setTagCloud() {
         dataType: "json",
         success: function(data, stat, xhr) {
             $('.tag-cloud li').remove();
-            $('.tag-cloud ul').css('font-size', '70%');
+            $('.tag-cloud ul').css('font-size', '100%');
             totalOccurrence = 0;
             for (var idx in data.tags) {
                 totalOccurrence += data.tags[idx].occurrence;
@@ -33,10 +33,8 @@ function getFontSizeEm(tag) {
     if (totalOccurrence < 7) {
         return 1;
     }
-    baseVal = (tag.occurrence / totalOccurrence) * 10;
-    if (baseVal > 2.5) {
-        return 2.5;
-    } else {
-        return Math.max(1, baseVal);
-    }
+    maxSize = 4;
+    minSize = 0.7;
+    baseVal = (tag.occurrence / totalOccurrence);
+    return baseVal * (maxSize - minSize) + minSize;
 }

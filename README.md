@@ -1,4 +1,4 @@
-hirogwablog
+plain-blog
 ===========
 A simple Django application to host a blog.
 

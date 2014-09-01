@@ -2,102 +2,112 @@
  * Defines look and feel of the main pane.
  */
 
-.entry_list_header
-  .query_string,
-  .category_string,
-  .tag_name
-    font-style: italic
+#main-pane-inner
+    padding: 1em 2em 3em
+#main-pane
+    padding: 1em
+    .entry_list_header
+        .query_string,
+        .category_string,
+        .tag_name
+            font-style: italic
 
-.entry
-  padding-bottom: 20px
-  padding-top: 20px
-  header
-    text-align: left
-  h2
-    margin-bottom: 0px
-  p a
-    text-decoration: underline
+    .entry
+        padding-bottom: 20px
+        padding-top: 20px
+        header
+            text-align: left
+        h2
+            margin-bottom: 0px
+        p a
+            text-decoration: underline
 
-  blockquote
-    font-style: italic
-    font-weight: lighter
-    border-left: 3px solid #ccc
-    padding-left: 20px
-    padding-top: 15px
-    padding-bottom: 15px
+        article
+            iframe
+                width: 100%
+                margin: 1.5em auto
+        blockquote
+            font-style: italic
+            font-weight: lighter
+            border-left: 3px solid #ccc
+            padding-left: 20px
+            padding-top: 15px
+            padding-bottom: 15px
 
-  .entry_footer
-    border-top: 1px solid #ddd
+    .entry_footer
+        border-top: 1px solid #ddd
 
-  iframe
-    display: block
-    margin: 0 auto
+    footer
+        margin-bottom: 3em
+        margin-top: 4em
+        padding-top: 0
+        text-align: right
+        font-style: inherit
+        a
+            text-decoration: underline
+        .footer_clear
+            display: block
+            clear: both
 
-  footer
-    margin-bottom: 60px
-    margin-top: 35px
-    padding-top: 0px
-    text-align: right
-    font-style: inherit
-    a
-      text-decoration: underline
+    .pub_info
+        box-sizing: border-box
+        float: right
+        width: 40%
 
-.social_buttons
-  float: left
-  display: inline-block
+    .social_buttons
+        box-sizing: border-box
+        float: left
+        width: 50%
 
-.fb-like
-  float: left
-  display: inline-block
+    .fb-like
+        float: left
+        display: inline-block
 
-.twitter_share
-  float: left
-  display: inline-block
-  margin-top: 2px
-  margin-left: 10px
-
-.pub_info
-  display: inline-block
+    .twitter_share
+        float: left
+        display: inline-block
+        margin-top: 2px
+        margin-left: 10px
+    .twitter-share-button
+        margin: 0
 
 
-.entry_comment
-  .existing_comments
-    h3
-      margin-bottom: 0px
-      margin-top: 25px
-    p
-      margin-top: 8px
-    div
-      margin-top: 0px
-      display: inline-block
-    .text
-      margin-left: 10px
-  .pub_date
-    font-size: 80%
+    .entry_comment
+        .existing_comments
+            h3
+                margin-bottom: 0px
+                margin-top: 25px
+            p
+                margin-top: 8px
+            div
+                margin-top: 0px
+                display: inline-block
+        .text
+            margin-left: 10px
+        .pub_date
+            font-size: 80%
 
-  .add_comment
-    input,
-    textarea
-      margin-top: 10px
-      margin-bottom: 10px
-      width: 100%
-    .comment_submit input
-      float: right
-      width: 20%
-      padding-right: 20px
-      height: 200%
-    .comment_content textarea
-      height: 130px
-    h3
-      padding-top: 40px
+    .add_comment
+        border-top: solid 1px #fff
+        margin: 3em auto 0
+        width: 80%
+        .comment_input_area
+            margin: 1em auto
+            padding-right: 1em
+        input,
+        textarea
+            width: 100%
+        .comment_submit
+            text-align: right
+            input
+                width: 40%
+                height: 2em
+        .comment_content textarea
+            height: 130px
 
-.comment_form
-  float: center
-  width: 75%	
-
-.pagination
-  text-align: center
-  .current
-    margin-left: 4em
-    margin-right: 4em
+    .pagination
+        text-align: center
+        .current
+            margin-left: 4em
+            margin-right: 4em
 

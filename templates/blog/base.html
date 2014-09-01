@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
   <link href="{% url 'blog:feed' %}" rel="alternate" type="application/rss+xml" title="{{ blog.name }}" />
   {% load staticfiles %}
   <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
@@ -25,22 +27,27 @@
 <body>
 {% block dependencies %}
 {% endblock %}
-<div class="top-pane">
+<div id="top-pane" class="transparent-plate-dark">
+  <div id="top-pane-inner">
   <header class="blog_title">
     <h1>
       <a href="{% url 'blog:index' %}">{{ blog.name }}</a>
       <small>{{ blog.description }}</small>
     </h1>
   </header>
+  </div>
 </div>
 
 <div class="main-container">
-  <div class="main-pane">
+  <div id="main-pane">
+    <div id="main-pane-inner" class="transparent-plate">
     {% block contents %}
     {% endblock %}
+    </div>
   </div>
 
-  <div class="sidebar">
+  <div id="sidebar">
+    <div id="sidebar-inner" class="transparent-plate">
     {% block sidebar %}
 
     <div class="gravatar">
@@ -94,11 +101,17 @@
 
     {% endblock %}
   </div>
+  </div>
 </div>
 <div class="clear"></div>
 
-<div class="bottom-pane">
-  <footer class="page_bottom">
-  </footer>
-</div>
+<footer class="page_bottom">
+  <div id="bottom-pane">
+    <div id="bottom-pane-inner">
+      <div class="credit">
+        <p>Powered by <i><a href="https://github.com/hirogwa/plain-blog">plain-blog</a></i></p>
+      </div>
+    </div>
+  </div>
+</footer>
 </body>

@@ -23,12 +23,14 @@
 {% if entries %}
 {% for entry in entries %}
 <div class="entry">
-<article>
   <header>
     <h2><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></h2>
   </header>
+  <article>
   <p>{{ entry.content|safe }}</p>
+  </article>
   <footer class="entry_footer">
+  <div id="entry_footer_inner">
     <div class="pub_info">
       <small>{{ entry.spaced_datetime }}</small>
       <small>
@@ -50,9 +52,11 @@
            data-url="http://{{ host }}{% url 'blog:entry_by_slug' entry.slug %}" data-text="{{ entry.title }}">Tweet</a>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
       </div>
+      <span class="footer_clear"></span>
     </div>
+    <span class="footer_clear"></span>
+  </div>
   </footer>
-</article>
 </div>
 
 {% block entry_footer %}

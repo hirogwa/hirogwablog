@@ -19,6 +19,8 @@ class Blog(models.Model):
     facebook_app_id = models.CharField(max_length=30)
     theme = models.ForeignKey(Theme)
     author_email = models.EmailField()
+    background = models.ImageField(upload_to='images', blank=True)
+    favicon = models.ImageField(upload_to='images', blank=True)
 
     def __unicode__(self):
         return self.name

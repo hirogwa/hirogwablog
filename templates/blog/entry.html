@@ -22,17 +22,17 @@
     <h3 id="add_comment">add comment</h3>
     <form class="comment_form" method="post" action="{% url 'blog:entry' entries.0.id %}">
       {% csrf_token %}
-      <div class="comment_author">
+      <div class="comment_author comment_input_area">
         <input id="author" type="text" required name="author" placeholder="Name (required)"/>
       </div>
-      <div class="comment_email">
+      <div class="comment_email comment_input_area">
         <input id="email" type="email" required name="email" placeholder="Email (required, will not be published)" />
       </div>
-      <div class="comment_content">
+      <div class="comment_content comment_input_area">
         <label for="content"></label>
         <textarea id="content" type="text" aria-required="true" name="content" placeholder="Comment..."></textarea>
       </div>
-      <div class="comment_submit" >
+      <div class="comment_submit comment_input_area">
         <input id="submit" type="submit" value="post comment" name="submit" />
       </div>
     </form>

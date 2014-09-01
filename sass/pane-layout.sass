@@ -2,37 +2,38 @@
  * Basic grid layout.
  * 12 container with 9/3 grids.
  */
-body
-  min-width: 960px
+$desktop-min: 1080px
+
+#top-pane
+    margin-bottom: 1em
 
 .main-container
-  margin-left: auto
-  margin-right: auto
-  width: 960px
+    margin: 0 auto
+    max-width: 960px
 
-.main-pane,
-.sidebar
-  display: inline
-  float: left
-  margin-left: 10px
-  margin-right: 10px
+#sidebar
+    @media screen and (min-width: $desktop-min)
+        box-sizing: border-box
+        float: left
+        width: 30%
 
-.sidebar
-  width: 200px
-  padding-left: 20px
-
-.main-pane
-  width: 680px
-  padding-right: 20px
+#main-pane
+    @media screen and (min-width: $desktop-min)
+        box-sizing: border-box
+        float: left
+        width: 70%
+    p
+        line-height: 120%
+        letter-spacing: 0.1em
 
 .clear 
-  clear: both
-  display: block
-  overflow: hidden
-  visibility: hidden
-  width: 0
-  height: 0
+    clear: both
+    display: block
+    overflow: hidden
+    visibility: hidden
+    width: 0
+    height: 0
 
 .page_bottom
-  margin-top: 100px
+    margin-top: 3em
 

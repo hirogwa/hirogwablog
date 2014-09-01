@@ -1,4 +1,5 @@
 .idea/*
+*.css
 *.pyc
 *.sqlite3
 .DS_Store

@@ -13,4 +13,4 @@ A simple Django application to host a blog.
   * define locations `/static/`, `/media/`, accordingly in the nginx.conf
 
 ## License
-plain-podcast is released under the [MIT license](http://opensource.org/licenses/MIT).
+plain-blog is released under the [MIT license](http://opensource.org/licenses/MIT).

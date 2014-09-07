@@ -11,3 +11,6 @@ A simple Django application to host a blog.
   * define `MEDIA_URL`, `MEDIA_ROOT` for image storage
 * Nginx
   * define locations `/static/`, `/media/`, accordingly in the nginx.conf
+
+## License
+plain-blog is released under the [MIT license](http://opensource.org/licenses/MIT).

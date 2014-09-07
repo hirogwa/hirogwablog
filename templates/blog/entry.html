@@ -10,7 +10,7 @@
       </div>
       <div class="text">
         <h3 id="{{ comment.anchor_id }}">{{ comment.author }}</h3>
-        <span class="pub_date"><a href="{{ request.get_full_path }}#{{ comment.anchor_id }}">{{ comment.pub_date_string }}</a></span>
+        <span class="pub_date utc-datetime"><a href="{{ request.get_full_path }}#{{ comment.anchor_id }}">{{ comment.spaced_datetime }}</a></span>
       </div>
     </header>
     <p>{{ comment.content|linebreaks }}</p>

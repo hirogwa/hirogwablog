@@ -47,7 +47,7 @@
   <footer class="entry_footer">
   <div id="entry_footer_inner">
     <div class="pub_info">
-      <small>{{ entry.spaced_datetime }}</small>
+      <small class="utc-datetime">{{ entry.spaced_datetime }}</small>
       <small>
         in <a href="{% url 'blog:category_by_name' entry.category %}">{{ entry.category }}</a>
       </small>

@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+import datetime
 import urllib
 import hashlib
 
@@ -46,10 +47,10 @@ class Category(models.Model):
 class Entry(models.Model):
     blog = models.ForeignKey(Blog)
     category = models.ForeignKey(Category)
-    title = models.TextField()
+    title = models.CharField(max_length=100)
     content = models.TextField()
-    slug = models.SlugField()
-    pub_date = models.DateTimeField('published_time')
+    slug = models.SlugField(blank=True)
+    pub_date = models.DateTimeField('published_time', blank=True)
 
     def comment_count(self):
         """
@@ -58,14 +59,14 @@ class Entry(models.Model):
         return len(Comment.objects.filter(entry=self))
 
     def tags(self):
-        tagmap = TagMap.objects.filter(entry=self.id)
+        tag_map = TagMap.objects.filter(entry=self.id)
         tags = []
-        for map in tagmap:
-            tags.append(map.tag)
+        for one_map in tag_map:
+            tags.append(one_map.tag)
         return tags
 
     def spaced_datetime(self):
-        return '%d %02d %02d %02d:%02d' % \
+        return '%d %02d %02d %02d %02d' % \
                (self.pub_date.year, self.pub_date.month, self.pub_date.day, self.pub_date.hour, self.pub_date.minute)
 
     def spaced_date(self):
@@ -79,6 +80,10 @@ class Entry(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        # get current time as pub-date for the new entry.
+        if len(Entry.objects.filter(pk=self.pk)) == 0:
+            self.pub_date = datetime.datetime.now()
+
         date = self.pub_date
         if self.slug == '':
             slug_base = self.title
@@ -144,6 +149,10 @@ class Comment(models.Model):
         date = self.pub_date
         return '%s-%d%02d%02d%02d%02d' % \
             (self.author, date.year, date.month, date.day, date.hour, date.minute)
+
+    def spaced_datetime(self):
+        return '%d %02d %02d %02d %02d' % \
+               (self.pub_date.year, self.pub_date.month, self.pub_date.day, self.pub_date.hour, self.pub_date.minute)
 
     def pub_date_string(self):
         date = self.pub_date

@@ -1,6 +1,31 @@
 $(document).ready(function () {
     setTagCloud();
+    adjustDatetime();
 });
+
+// Converts the displayed UTC times according to the local's timezone.
+function adjustDatetime() {
+    $('.utc-datetime').each( function(index) {
+        var dateparts = $(this).text().split(' ');
+        var utcMsec = Date.UTC(dateparts[0], // Year
+                               dateparts[1], // Month
+                               dateparts[2], // Date
+                               dateparts[3], // Hour
+                               dateparts[4]  // Minute
+                               );
+        var dt= new Date(utcMsec - new Date().getTimezoneOffset());
+        $(this).text(sprintf('%d %02d %02d %02d:%02d (UTC%s%02d%02d)',
+                           dt.getFullYear(),
+                           dt.getMonth(),
+                           dt.getDate(),
+                           dt.getHours(),
+                           dt.getMinutes(),
+                           dt.getTimezoneOffset() > 0 ? '-' : '+',
+                           dt.getTimezoneOffset() / 60,
+                           dt.getTimezoneOffset() % 60
+                           ));
+    });
+}
 
 function setTagCloud() {
     $.ajax({

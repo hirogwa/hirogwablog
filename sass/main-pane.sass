@@ -2,10 +2,13 @@
  * Defines look and feel of the main pane.
  */
 
+$mobile-max: 640px
 #main-pane-inner
     padding: 1em 2em 3em
 #main-pane
     padding: 1em
+    @media screen and (max-width: $mobile-max)
+        padding: 1em 0
     .entry_list_header
         .query_string,
         .category_string,

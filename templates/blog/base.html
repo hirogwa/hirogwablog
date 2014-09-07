@@ -64,7 +64,7 @@
     <h3>categories</h3>
       <ul>
       {% for cat in categories %}
-        <li><a href="{% url 'blog:category_by_name' cat.name %}">{{ cat }}</a></li>
+        <li><a href="{% url 'blog:category_by_name' cat.name %}">{{ cat }}</a><span id="category_count"> ({{ cat.entry_count }})</span></li>
       {% endfor %}
       </ul>
 

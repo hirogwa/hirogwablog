@@ -24,7 +24,22 @@
 {% for entry in entries %}
 <div class="entry">
   <header>
-    <h2><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a></h2>
+    <h2>
+      <a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title }}</a>
+    </h2>
+    <span id="episode_comment_link">
+      <a href="{% url 'blog:entry_by_slug' entry.slug %}#entry_comments">
+        <i>
+        {% if entry.comment_count == 0 %}
+          leave a comment
+        {% elif entry.comment_count == 1 %}
+          1 comment
+        {% else %}
+          {{ entry.comment_count }} comments
+        {% endif %}
+        </i>
+      </a>
+    </span>
   </header>
   <article>
   <p>{{ entry.content|safe }}</p>

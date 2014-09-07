@@ -1,6 +1,7 @@
 .idea/*
 *.css
 *.pyc
+*.sassc
 *.sqlite3
 .DS_Store
 client/*.html

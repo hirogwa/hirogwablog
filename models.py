@@ -33,6 +33,12 @@ class Category(models.Model):
     blog = models.ForeignKey(Blog)
     name = models.CharField(max_length=200)
 
+    def entry_count(self):
+        """
+        :return: number of entries associated with this category
+        """
+        return len(Entry.objects.filter(category=self))
+
     def __unicode__(self):
         return self.name
 
@@ -44,6 +50,12 @@ class Entry(models.Model):
     content = models.TextField()
     slug = models.SlugField()
     pub_date = models.DateTimeField('published_time')
+
+    def comment_count(self):
+        """
+        :return: number of the comments associated with this entry.
+        """
+        return len(Comment.objects.filter(entry=self))
 
     def tags(self):
         tagmap = TagMap.objects.filter(entry=self.id)

@@ -1,3 +1,4 @@
+@charset "UTF-8"
 @import pane-layout
 @import top-pane
 @import main-pane
@@ -5,13 +6,15 @@
 @import bottom-pane
 @import archive
 @import night-skiing-color
+$font-kaku: "Lucida Grande", "segoe UI", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", Meiryo, Verdana, Arial, sans-serif
+$font-maru: "Lucida Grande", "segoe UI", "ヒラギノ丸ゴ ProN W4", "Hiragino Maru Gothic ProN", Meiryo, Arial, sans-serif
 
 /*
  * Some universal theme across the panes.
  */
 body
     margin: 0
-    font-family: 'Roboto', sans-serif
+    font-family: 'Roboto', $font-kaku
     background-image: url("/media/images/background.jpg")
     background-repeat: no-repeat
     background-attachment: fixed

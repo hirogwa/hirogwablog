@@ -30,12 +30,16 @@
     <span id="episode_comment_link">
       <a href="{% url 'blog:entry_by_slug' entry.slug %}#entry_comments">
         <i>
-        {% if entry.comment_count == 0 %}
-          leave a comment
-        {% elif entry.comment_count == 1 %}
-          1 comment
+        {% if not blog.disqus_shortname %}
+          {% if entry.comment_count == 0 %}
+            leave a comment
+          {% elif entry.comment_count == 1 %}
+            1 comment
+          {% else %}
+            {{ entry.comment_count }} comments
+          {% endif %}
         {% else %}
-          {{ entry.comment_count }} comments
+          comments
         {% endif %}
         </i>
       </a>

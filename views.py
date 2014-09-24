@@ -4,7 +4,6 @@ from django.shortcuts import render, get_object_or_404
 from models import Entry, Blog, Category, Comment, Tag, TagMap
 from search import get_query
 from datetime import datetime
-from disqus import Disqus
 from django.http import HttpResponseRedirect
 import unicodedata
 
@@ -119,7 +118,8 @@ def add_sidebar_info(blog):
                'categories': categories,
                'recent_entries': recent_entries}
     if blog.disqus_shortname:
-        context['recent_comments'] = Disqus().get_post_list(blog.disqus_shortname)
+        #context['recent_comments'] = Disqus().get_post_list(blog.disqus_shortname)
+        pass
     else:
         recent_comments = Comment.objects.order_by('-pub_date')[:7]
         context['recent_comments'] = recent_comments

@@ -73,7 +73,7 @@
     <h3>recent comments</h3>
       <ul>
         {% for comment in recent_comments %}
-          <li><a href="{% url 'blog:entry' comment.entry.id %}#{{ comment.anchor_id }}">{{ comment.author }} <small>on <i>{{ comment.entry_title }}</i></small></a></li>
+          <li><a href="{% url 'blog:entry' comment.entry.id %}#{{ comment.anchor_id }}">{{ comment.author }} <small>on <i>{{ comment.entry.title }}</i></small></a></li>
         {% endfor %}
       </ul>
     {% endif %}

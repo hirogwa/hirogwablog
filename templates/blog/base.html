@@ -69,12 +69,14 @@
       {% endfor %}
       </ul>
 
+    {% if not blog.disqus_shortname %}
     <h3>recent comments</h3>
       <ul>
-      {% for comment in recent_comments %}
-        <li><a href="{% url 'blog:entry' comment.entry.id %}#{{ comment.anchor_id }}">{{ comment.author }} <small>on <i>{{ comment.entry }}</i></small></a></li>
-      {% endfor %}
+        {% for comment in recent_comments %}
+          <li><a href="{% url 'blog:entry' comment.entry.id %}#{{ comment.anchor_id }}">{{ comment.author }} <small>on <i>{{ comment.entry_title }}</i></small></a></li>
+        {% endfor %}
       </ul>
+    {% endif %}
 
     <h3>recent posts</h3>
       <ul>
@@ -91,7 +93,9 @@
     <h3>feed</h3>
       <ul>
         <li><a href="{% url 'blog:feed' %}">posts</a></li>
+        {% if not blog.disqus_shortname %}
         <li><a href="{% url 'blog:feed_comments' %}">comments</a></li>
+        {% endif %}
       </ul>
 
     <div class="search_form">

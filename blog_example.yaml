@@ -1,0 +1,8 @@
+# disqus settings. if you use it.
+# fill in the actual values and rename the file "blog.yaml"
+
+api_key: value
+api_secret: value
+public_key: value
+secret_key: value
+access_token: value

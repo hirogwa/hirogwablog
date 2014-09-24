@@ -22,6 +22,7 @@ class Blog(models.Model):
     author_email = models.EmailField()
     background = models.ImageField(upload_to='images', blank=True)
     favicon = models.ImageField(upload_to='images', blank=True)
+    disqus_shortname = models.CharField(max_length=100, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -33,12 +34,6 @@ class Blog(models.Model):
 class Category(models.Model):
     blog = models.ForeignKey(Blog)
     name = models.CharField(max_length=200)
-
-    def entry_count(self):
-        """
-        :return: number of entries associated with this category
-        """
-        return len(Entry.objects.filter(category=self))
 
     def __unicode__(self):
         return self.name

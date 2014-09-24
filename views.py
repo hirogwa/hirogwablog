@@ -1,8 +1,10 @@
-from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count
+from django.shortcuts import render, get_object_or_404
 from models import Entry, Blog, Category, Comment, Tag, TagMap
 from search import get_query
 from datetime import datetime
+from disqus import Disqus
 from django.http import HttpResponseRedirect
 import unicodedata
 
@@ -18,7 +20,8 @@ def index(request):
 def archive(request):
     entries = Entry.objects.all().order_by('-pub_date')
     context = {'entries': entries}
-    return render(request, 'blog/archive.html', add_universal_content(context))
+    context.update(add_universal_content(request))
+    return render(request, 'blog/archive.html', context)
 
 
 # displays multiple entries with pagination
@@ -32,17 +35,17 @@ def paginated_view(request, entry_list, html_file='blog/page.html', context={}):
     except EmptyPage:
         entries = paginator.page(paginator.num_pages)
     context['entries'] = entries
-    context['host'] = request.META['HTTP_HOST']
-    return render(request, html_file, add_universal_content(context))
+    context.update(add_universal_content(request))
+    return render(request, html_file, context)
 
 
 # displays single entry with no pagination
 def single_entry_view(request, entry_obj, html_file="blog/entry.html", context={}):
     comments = Comment.objects.filter(entry=entry_obj.id).order_by('pub_date')
     context['entries'] = [entry_obj]
-    context['host'] = request.META['HTTP_HOST']
     context['comments'] = comments
-    return render(request, html_file, add_universal_content(context))
+    context.update(add_universal_content(request))
+    return render(request, html_file, context)
 
 
 def entry_by_id(request, entry_id):
@@ -93,20 +96,34 @@ def tag(request, tag_name):
     return paginated_view(request, entries, html_file="blog/tag.html", context={"tag_name": tag_name})
 
 
-def add_universal_content(context):
-    context['blog'] = Blog.objects.get(pk=1)
-    return add_sidebar_info(context)
+def add_universal_content(request):
+    blog_obj = Blog.objects.get(pk=1)
+    context = {'blog': blog_obj,
+               'host': request.META['HTTP_HOST']}
+    context.update(add_sidebar_info(blog_obj))
+    return context
 
 
-def add_sidebar_info(context):
+def add_sidebar_info(blog):
     recent_entries = Entry.objects.order_by('-pub_date')[:10]
-    recent_comments = Comment.objects.order_by('-pub_date')[:7]
-    categories = Category.objects.all()
     tags = Tag.objects.order_by('name')
-    context['tags'] = tags
-    context['categories'] = categories
-    context['recent_entries'] = recent_entries
-    context['recent_comments'] = recent_comments
+    categories = {}
+    category_counts = Category.objects.annotate(entry_count=Count('entry'))
+    print (category_counts)
+    for category_rec in category_counts:
+        categories[category_rec] = category_rec.entry_count
+
+    print (categories)
+
+    context = {'tags': tags,
+               'categories': categories,
+               'recent_entries': recent_entries}
+    if blog.disqus_shortname:
+        context['recent_comments'] = Disqus().get_post_list(blog.disqus_shortname)
+    else:
+        recent_comments = Comment.objects.order_by('-pub_date')[:7]
+        context['recent_comments'] = recent_comments
+
     return context
 
 

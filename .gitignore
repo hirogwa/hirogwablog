@@ -7,4 +7,4 @@
 client/*.html
 *.swp
 sass/.sass-cache/
-
+blog.yaml

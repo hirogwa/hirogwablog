@@ -15,6 +15,7 @@ urlpatterns = patterns('',
                        url(r'^tag/(?P<tag_name>\S+)/$', views.tag, name='tag'),
                        url(r'^archive/$', views.archive, name='archive'),
                        url(r'^search/$', views.search, name='search'),
+                       url(r'^search_es/$', views.search_es, name='search_es'),
 
                        # feed
                        url(r'^feed/$', LatestEntriesFeed(), name='feed'),

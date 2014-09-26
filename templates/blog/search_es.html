@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+
+{% block contents %}
+{% if hit_list %}
+{% for entry in hit_list %}
+<div id="search_es">
+  <ul>
+    <li>
+      <h2><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.title|safe }}</a></h2>
+      <small><a href="{% url 'blog:entry_by_slug' entry.slug %}">{{ entry.slug|safe }}</a></small>
+      <p>{{ entry.content|safe|truncatechars:1000 }}</p>
+      <p>category: {{ entry.category|safe }}, published: {{ entry.pub_date|safe }}</p>
+    </li>
+  </ul>
+</div>
+{% endfor %}
+{% else %}
+<p>No entries found.</p>
+{% endif %}
+{% endblock %}

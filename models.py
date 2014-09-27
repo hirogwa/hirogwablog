@@ -29,6 +29,8 @@ class Blog(BlogModel):
     background = models.ImageField(upload_to='images', blank=True)
     favicon = models.ImageField(upload_to='images', blank=True)
     disqus_shortname = models.CharField(max_length=100, blank=True)
+    elastic_search_index = models.CharField(max_length=50, blank=True)
+    elastic_search_doc_type = models.CharField(max_length=50, blank=True)
 
     def __unicode__(self):
         return self.name

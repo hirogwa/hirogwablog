@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+import escontrol
 import datetime
 import urllib
 import hashlib
@@ -82,6 +83,10 @@ class Entry(BlogModel):
     def __unicode__(self):
         return self.title
 
+    def delete(self, using=None):
+        escontrol.ESControl().remove_entry(self)
+        super(Entry, self).delete(using=using)
+
     def save(self, *args, **kwargs):
         # get current time as pub-date for the new entry.
         if len(Entry.objects.filter(pk=self.pk)) == 0:
@@ -91,6 +96,7 @@ class Entry(BlogModel):
         if self.slug == '':
             slug_base = self.title
             self.slug = '%i%02d%02d-%s' % (date.year, date.month, date.day, slugify(slug_base))
+        escontrol.ESControl().import_entry(self)
         super(Entry, self).save(*args, **kwargs)
 
 

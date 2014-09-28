@@ -1,8 +1,12 @@
-# disqus settings. if you use it.
 # fill in the actual values and rename the file "blog.yaml"
 
+# disqus settings. if you use it.
 api_key: value
 api_secret: value
 public_key: value
 secret_key: value
 access_token: value
+
+# for classes to be accessed by outside the django app.
+project_directory: /your/project/location
+project_settings: yourproject.settings

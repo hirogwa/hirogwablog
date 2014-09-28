@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block contents %}
+{% if hit_list %}
+<div id="search-es">
+  <ul>
+    {% for entry in hit_list %}
+    <li>
+      <h2><a href="{% url 'blog:entry_by_slug' entry.slug_source %}">{{ entry.title|safe }}</a></h2>
+      <span class="slug"><a href="{% url 'blog:entry_by_slug' entry.slug_source %}">{{ host }}/{{ entry.slug|safe }}</a></span>
+      <p class="content">{{ entry.content|safe|truncatechars:1000 }}</p>
+      <span class="category">category: {{ entry.category|safe }}</span>
+      <span class="pub_date">published: {{ entry.pub_date|safe }}</span>
+      <span class="score">search score: {{ entry.score }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% else %}
+<p>No entries found.</p>
+{% endif %}
+{% endblock %}

@@ -5,7 +5,13 @@ import urllib
 import hashlib
 
 
-class Theme(models.Model):
+class BlogModel(models.Model):
+    class Meta:
+        abstract = True
+        app_label = 'blog'
+
+
+class Theme(BlogModel):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=400)
     css_file = models.CharField(max_length=200)
@@ -14,7 +20,7 @@ class Theme(models.Model):
         return self.name
 
 
-class Blog(models.Model):
+class Blog(BlogModel):
     name = models.CharField(max_length=200)
     description = models.TextField()
     facebook_app_id = models.CharField(max_length=30)
@@ -23,6 +29,8 @@ class Blog(models.Model):
     background = models.ImageField(upload_to='images', blank=True)
     favicon = models.ImageField(upload_to='images', blank=True)
     disqus_shortname = models.CharField(max_length=100, blank=True)
+    elastic_search_index = models.CharField(max_length=50, blank=True)
+    elastic_search_doc_type = models.CharField(max_length=50, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -31,7 +39,7 @@ class Blog(models.Model):
         return gravatar_url(self.author_email, 150)
 
 
-class Category(models.Model):
+class Category(BlogModel):
     blog = models.ForeignKey(Blog)
     name = models.CharField(max_length=200)
 
@@ -39,7 +47,7 @@ class Category(models.Model):
         return self.name
 
 
-class Entry(models.Model):
+class Entry(BlogModel):
     blog = models.ForeignKey(Blog)
     category = models.ForeignKey(Category)
     title = models.CharField(max_length=100)
@@ -86,7 +94,7 @@ class Entry(models.Model):
         super(Entry, self).save(*args, **kwargs)
 
 
-class Tag(models.Model):
+class Tag(BlogModel):
     name = models.CharField(max_length=100)
     occurrence = models.IntegerField()
 
@@ -94,7 +102,7 @@ class Tag(models.Model):
         return self.name
 
 
-class TagMap(models.Model):
+class TagMap(BlogModel):
     tag = models.ForeignKey(Tag, db_index=True)
     entry = models.ForeignKey(Entry, db_index=True)
 
@@ -133,7 +141,7 @@ class TagMap(models.Model):
         super(TagMap, self).save(*args, **kwargs)
 
 
-class Comment(models.Model):
+class Comment(BlogModel):
     entry = models.ForeignKey(Entry)
     author = models.CharField(max_length=60)
     email = models.EmailField()

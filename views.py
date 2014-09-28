@@ -4,7 +4,8 @@ from django.shortcuts import render, get_object_or_404
 from models import Entry, Blog, Category, Comment, Tag, TagMap
 from search import get_query
 from datetime import datetime
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
+import escontrol
 import unicodedata
 
 
@@ -108,11 +109,8 @@ def add_sidebar_info(blog):
     tags = Tag.objects.order_by('name')
     categories = {}
     category_counts = Category.objects.annotate(entry_count=Count('entry'))
-    print (category_counts)
     for category_rec in category_counts:
         categories[category_rec] = category_rec.entry_count
-
-    print (categories)
 
     context = {'tags': tags,
                'categories': categories,
@@ -128,6 +126,14 @@ def add_sidebar_info(blog):
 
 
 def search(request):
+    b = get_object_or_404(Blog, pk=1)
+    if b.elastic_search_index and b.elastic_search_doc_type:
+        return _es_search(request, b.elastic_search_index, b.elastic_search_doc_type)
+    else:
+        return _db_search(request)
+
+
+def _db_search(request):
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string_base = request.GET['q']
         query_string = unicodedata.normalize('NFKC', query_string_base)
@@ -137,3 +143,14 @@ def search(request):
         return paginated_view(request, found_entries, html_file='blog/search.html', context=context)
     else:
         return index(request)
+
+
+def _es_search(request, es_index, es_doc_type):
+    if ('q' in request.GET) and request.GET['q'].strip():
+        query_string = request.GET['q']
+        esc = escontrol.ESControl(es_index, es_doc_type)
+        context = {'hit_list': esc.search_entries(query_string)}
+        context.update(add_universal_content(request))
+        return render(request, 'blog/search_es.html', context)
+    else:
+        raise Http404

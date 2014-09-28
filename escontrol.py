@@ -14,14 +14,15 @@ if __name__ in ("escontrol", "__main__"):
 
 from django.utils.html import strip_tags
 from elasticsearch import Elasticsearch
-from models import Blog, Entry
+import models
 import essettings
 
 
 class ESControl():
-    def __init__(self, index, doc_type):
-        self._index = index
-        self._doc_type = doc_type
+    def __init__(self, index=None, doc_type=None):
+        b = models.Blog.objects.all()[0]
+        self._index = index or b.elastic_search_index
+        self._doc_type = doc_type or b.elastic_search_doc_type
         self._es = Elasticsearch()
 
     @staticmethod
@@ -35,15 +36,21 @@ class ESControl():
         else:
             return ''
 
+    def remove_entry(self, entry):
+        self._es.delete(index=self._index, doc_type=self._doc_type, id=entry.id)
+
+    def import_entry(self, entry):
+        doc = {'title': entry.title,
+               'slug': entry.slug,
+               'content': strip_tags(entry.content),
+               'category': entry.category.name,
+               'pub_date': entry.pub_date}
+        self._es.index(index=self._index, doc_type=self._doc_type, id=entry.id, body=doc)
+
     def import_entries(self):
-        entries = Entry.objects.all()
+        entries = models.Entry.objects.all()
         for entry in entries:
-            doc = {'title': entry.title,
-                   'slug': entry.slug,
-                   'content': strip_tags(entry.content),
-                   'category': entry.category.name,
-                   'pub_date': entry.pub_date}
-            self._es.index(index=self._index, doc_type=self._doc_type, id=entry.id, body=doc)
+            self.import_entry(entry)
 
     def delete_index(self):
         self._es.indices.delete(self._index)
@@ -57,7 +64,9 @@ class ESControl():
         self._es.indices.open(self._index)
 
     def search_entries(self, query):
-        hits = self._es.search(index=self._index, doc_type=self._doc_type, body=essettings.search_query_body(query))['hits']
+        hits = self._es.search(index=self._index,
+                               doc_type=self._doc_type,
+                               body=essettings.search_query_body(query))['hits']
         hit_list = []
         for hit in hits['hits']:
             item = {
@@ -76,7 +85,7 @@ if __name__ == '__main__':
     '''
     set up elasticsearch, assuming Japanese entries.
     '''
-    blog_list = Blog.objects.all()
+    blog_list = models.Blog.objects.all()
     if blog_list:
         b = blog_list[0]
         if b.elastic_search_index and b.elastic_search_doc_type:

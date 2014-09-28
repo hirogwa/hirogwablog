@@ -96,8 +96,8 @@ class Entry(BlogModel):
         if self.slug == '':
             slug_base = self.title
             self.slug = '%i%02d%02d-%s' % (date.year, date.month, date.day, slugify(slug_base))
-        escontrol.ESControl().import_entry(self)
         super(Entry, self).save(*args, **kwargs)
+        escontrol.ESControl().import_entry(self)
 
 
 class Tag(BlogModel):

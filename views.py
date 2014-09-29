@@ -43,6 +43,7 @@ def paginated_view(request, entry_list, html_file='blog/page.html', context={}):
 def single_entry_view(request, entry_obj, html_file="blog/entry.html", context={}):
     comments = Comment.objects.filter(entry=entry_obj.id).order_by('pub_date')
     context['entries'] = [entry_obj]
+    context['similar_entries'] = entry_obj.similar_entries(5)
     context['comments'] = comments
     context.update(add_universal_content(request))
     return render(request, html_file, context)

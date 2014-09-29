@@ -65,6 +65,19 @@
   </div>
   {% endif %}
 </div>
+<div id="similar_entries">
+  {% if similar_entries %}
+  <h3>Articles similar to <i>{{ entry.title }}</i>...</h3>
+  <ul>
+    {% for s_entry in similar_entries %}
+    <li>
+      <h4><a href="{% url 'blog:entry_by_slug' s_entry.entry.slug %}">{{ s_entry.entry.title }}</a></h4>
+      <span class="score">score: {{ s_entry.score }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
 {% endblock %}
 
 {% block entry_list_footer %}

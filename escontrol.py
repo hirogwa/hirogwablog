@@ -89,7 +89,6 @@ class ESControl():
         query_result = self._es.mlt(self._index, self._doc_type, entry.id, **kwargs)
         entry_list = []
         for hit in query_result['hits']['hits']:
-            print (hit)
             hit_info = {'entry': hit.get('_source'),
                         'score': hit.get('_score')}
             entry_list.append(hit_info)

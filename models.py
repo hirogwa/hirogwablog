@@ -83,6 +83,9 @@ class Entry(BlogModel):
     def __unicode__(self):
         return self.title
 
+    def similar_entries(self, search_size):
+        return escontrol.ESControl().more_like_this(self, search_size=search_size)
+
     def delete(self, using=None):
         escontrol.ESControl().remove_entry(self)
         super(Entry, self).delete(using=using)

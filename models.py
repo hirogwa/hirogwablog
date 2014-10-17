@@ -84,7 +84,10 @@ class Entry(BlogModel):
         return self.title
 
     def similar_entries(self, search_size):
-        return escontrol.ESControl().more_like_this(self, search_size=search_size)
+        if self.blog.elastic_search_index and self.blog.elastic_search_doc_type:
+            return escontrol.ESControl().more_like_this(self, search_size=search_size)
+        else:
+            return None
 
     def delete(self, using=None):
         escontrol.ESControl().remove_entry(self)

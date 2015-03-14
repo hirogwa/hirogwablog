@@ -147,7 +147,7 @@ class TagMap(BlogModel):
             else:
                 original.tag.save()
 
-        print occurrence_incr
+        print (occurrence_incr)
         self.tag.occurrence += occurrence_incr
         self.tag.save()
         super(TagMap, self).save(*args, **kwargs)
